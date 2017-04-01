@@ -1,0 +1,22 @@
+{
+    "name": "litemerafrukt/404",
+    "description": "Small php framework built on components from anax-light.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anders Nygren",
+            "email": "litemerafrukt@gmail.com"
+        }
+    ],
+    "require": {
+        "anax/request": "^1.0",
+        "anax/url": "^1.0",
+        "anax/router": "^1.0",
+        "anax/response": "^1.0",
+        "anax/view": "^1.0",
+        "mos/cimage": "^0.7.19"
+    },
+    "autoload": {
+        "psr-4": {"_404\\": "src/"}
+    }
+}
