@@ -2,7 +2,6 @@
 # This is a modified rewrite to fit Anax when working on both local development
 # environment and publishing to www.student.bth.se.
 #
-# Do NOT forget to change /~mosstud/ to your own student acronym.
 #
 RewriteEngine on
 

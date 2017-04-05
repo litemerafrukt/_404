@@ -1,0 +1,60 @@
+body {
+  padding-top: 50px;
+  padding-bottom: 30px;
+}
+
+img {
+    border: 3px solid #999;
+}
+/*.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}*/
+
+.intro-header {
+    background: url(../image/elephant.jpg) no-repeat center center;
+}
+
+.report-header {
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../image/report-writing.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.about-header {
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../image/jungle.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.about-message {
+    padding-top: 5%;
+    padding-bottom: 5%;
+
+}
+
+.about-message > h1 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 4em;
+}
+
+.report-date {
+    font-size: small;
+    font-style: italic;
+    color: #AAA;
+}
+

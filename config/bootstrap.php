@@ -35,3 +35,6 @@ $app->url->setDefaultsFromConfiguration();
 // View setup
 $app->view->setApp($app);
 $app->view->configure("view.php");
+
+// Markdown kmom-reports setup
+$app->reports = new _404\Articles\Articles(_404_APP_PATH . "/content/reports");
