@@ -21,6 +21,7 @@
 
                 <p>Denna sida är skapd som en del av kursen <a href="http://dbwebb.se/oophp">oophp</a> på <a href="http://bth.se">Blekinge Tekniska Högskola</a>.</p>
                 <p>Jag som skapat sidan heter Anders Nygren och nås lättast på mail: <a href="mailto:litemerafrukt@gmail.com">litemerafrukt@gmail.com</a>.</p>
+                <p><a href="https://github.com/litemerafrukt/_404">Git-repo</a></p>
                 <p><a href="<?= $app->url->create('api/sysinfo') ?>">JSON-sysinfo</a></p>
             </div>
             <!--<div class="col-lg-5 col-lg-offset-2 col-sm-6">
