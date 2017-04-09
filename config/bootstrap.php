@@ -17,7 +17,7 @@ $app = new \_404\App\App();
 
 $app->request  = (new \Anax\Request\Request())->init();
 $app->response = new \Anax\Response\Response();
-$app->url      = new \Anax\Url\Url();
+$app->url      = new \_404\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
 $app->navbar   = new \_404\Navbar\Navbar();
