@@ -12,12 +12,10 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
     use ConfigureTrait;
     use AppInjectableTrait;
 
-    public function __construct()
-    {
-    }
-
     /**
-     * @param $item
+     * Get fully qualified route from config.
+     *
+     * @param string $item name of route in config
      * @return string route
      */
     public function getRoute($item)

@@ -41,17 +41,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <?php
-                    $app->navbar->mapView(
-                        function ($route, $text) use ($app) {
-                            ?>
-                            <li class="<?= $app->request->getCurrentUrl() == $route ? 'active': '' ?>">
-                                <a href="<?= $route ?>"><?= $text ?></a>
-                            </li>
-                            <?php
-                        }
-                    );
-                    ?>
+                    <?php $app->navbar->mapView(require __DIR__ . "/navbar2/headerView.php") ?>
                 </ul>
             </div>
         </div>
@@ -69,17 +59,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
-                        <?php
-                        $app->navbar->mapView(
-                            function ($route, $text) {
-                                ?>
-                                <li class="">
-                                    <a href="<?= $route ?>"><?= $text ?></a>
-                                </li>
-                                <?php
-                            }
-                        );
-                        ?>
+                        <?php $app->navbar->mapView(require __DIR__ . "/navbar2/footerView.php") ?>
                     </ul>
                     <hr>
                     <div class="copyright text-muted small">
