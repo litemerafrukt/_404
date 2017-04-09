@@ -20,13 +20,14 @@ $app->response = new \Anax\Response\Response();
 $app->url      = new \Anax\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
+$app->navbar   = new \_404\Navbar\Navbar();
 
 // Url init
-$app->url->setSiteUrl($app->request->getSiteUrl());
-$app->url->setBaseUrl($app->request->getBaseUrl());
-$app->url->setStaticSiteUrl($app->request->getSiteUrl());
-$app->url->setStaticBaseUrl($app->request->getBaseUrl());
-$app->url->setScriptName($app->request->getScriptName());
+$app->url->setSiteUrl($app->request->getSiteUrl())
+         ->setBaseUrl($app->request->getBaseUrl())
+         ->setStaticSiteUrl($app->request->getSiteUrl())
+         ->setStaticBaseUrl($app->request->getBaseUrl())
+         ->setScriptName($app->request->getScriptName());
 
 // Fetch from config
 $app->url->configure("url.php");
@@ -35,6 +36,11 @@ $app->url->setDefaultsFromConfiguration();
 // View setup
 $app->view->setApp($app);
 $app->view->configure("view.php");
+
+// Navbar setup
+$app->navbar->setApp($app);
+$app->navbar->configure("navbar.php");
+
 
 // Markdown kmom-reports setup
 $app->reports = new \_404\Articles\Articles(_404_APP_PATH . "/content/reports");
