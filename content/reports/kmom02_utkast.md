@@ -25,6 +25,8 @@ Jag tycker inte om att lägga in html-genererande funktioner i klasser, känslan
 
 Min navbar har inget stöd för undermenyer, det får komma när det behövs.
 
-För att förstå mer av ramverkets legobitar satt jag en eftermiddag och pillade runt med Url-klassen. Jag gjorde inga medvetna ändringar av logiken men lade till en klass för att underlätta läsandet av beslutsträd och konstruerandet av url-er. Alla tester går igenom så Url-klassens api bör fortfarande stämma. Refaktorering när det finns fullständiga test-case är så trevligt!
+För att förstå mer av ramverkets legobitar satt jag en eftermiddag och pillade runt med Url-klassen. Jag gjorde inga (medvetna) ändringar av logiken men lade till en klass för att underlätta läsandet av beslutsträd och konstruerandet av url-er. Alla tester går igenom så Url-klassens api bör fortfarande stämma. Refaktorering när det finns fullständiga test-case är så trevligt! Go TDD!
 
-Hur som helst vill jag ju inte bara testa min modifierade Url-legobit mot test-cases utan även i mitt ramverk. Därför har jag bytt ut anax-light standard-variant mot min egen.
+Hur som helst vill jag ju inte bara testa min modifierade Url-legobit mot test-cases utan även i mitt ramverk. Därför har jag bytt ut anax-light Url-modul mot min modifierade Url-modul.
+
+Efter att ha börjat pula runt med bitarna i ramverket börjar så smått anax-light och jag kunna umgås lite mer avslappnat. För att visa lite god vilja fick projektet en stjärna på github. Jag vet dock inte om jag tycker om view-klassen, känns lite som om den rör sig för mycket över gränsen mellan logik och presentation.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "56b910c8ae0352502155ecb517111213",
+    "content-hash": "457733351b798e508b9bd0b329b9ee64",
     "packages": [
         {
             "name": "anax/common",
@@ -204,56 +204,6 @@
                 "mvc"
             ],
             "time": "2017-03-26T20:55:23+00:00"
-        },
-        {
-            "name": "anax/url",
-            "version": "v1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/canax/url.git",
-                "reference": "5d3fa7b073ac63426c9b0446a5e86ecafbd1f67e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/canax/url/zipball/5d3fa7b073ac63426c9b0446a5e86ecafbd1f67e",
-                "reference": "5d3fa7b073ac63426c9b0446a5e86ecafbd1f67e",
-                "shasum": ""
-            },
-            "require": {
-                "anax/common": "^1.0",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Anax\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mikael Roos",
-                    "email": "mos@dbwebb.se",
-                    "homepage": "https://dbwebb.se",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Anax Url class.",
-            "homepage": "https://dbwebb.se/anax",
-            "keywords": [
-                "boilerplate",
-                "education",
-                "framework",
-                "micro",
-                "mvc"
-            ],
-            "time": "2017-03-30T22:16:53+00:00"
         },
         {
             "name": "anax/view",

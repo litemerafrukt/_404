@@ -10,7 +10,6 @@
     ],
     "require": {
         "anax/request": "^1.0",
-        "anax/url": "^1.0",
         "anax/router": "^1.0",
         "anax/response": "^1.0",
         "anax/view": "^1.0",
@@ -18,6 +17,8 @@
         "erusev/parsedown": "^1.6"
     },
     "autoload": {
-        "psr-4": {"_404\\": "src/"}
+        "psr-4": {
+            "_404\\": "src/"
+        }
     }
 }
