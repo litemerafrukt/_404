@@ -18,7 +18,7 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
      * @param string $item name of route in config
      * @return string route
      */
-    public function getRoute($item)
+    public function getRouteFor($item)
     {
         return $this->app->url->create(
             $this->config['items'][$item]['route']
@@ -26,48 +26,51 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
     }
 
     /**
-     * Render the navbar with a supplied callback
+     * Get fully qualified route for item.
      *
-     * @param callable $callback the callback receives route as first param and text as second
+     * @param $item
+     * @return string route
      */
-//    public function each($callback)
-//    {
-//        foreach ($this->config["items"] as $navItem) {
-//            $callback($this->app->url->create($navItem['route']), $navItem['text']);
-//        }
-//    }
-
-    private function renderMenu($file, $data)
+    public function getRoute($item)
     {
-        ob_start();
-
-        if (!file_exists($file)) {
-            throw new \Exception("Menu template not found: $file.");
-        }
-
-        extract($data);
-
-        include $file;
-
-        $output = ob_get_clean();
-
-        return $output;
+        return $this->app->url->create(
+            $item['route']
+        );
     }
 
-    public function __call($methodName, $data = [])
+    /**
+     * Get text for item.
+     *
+     * @param $item
+     * @return mixed
+     */
+    public function getText($item)
     {
+        return $item['text'];
+    }
 
+    /**
+     * Returns true if $route is the current route
+     *
+     * @param $routeItem
+     * @return bool
+     */
+    public function isCurrentRoute($routeItem)
+    {
+        $currentRoute = $this->app->request->getCurrentUrl();
+        $route = $this->app->url->create($routeItem['route']);
+        return  $currentRoute == $route;
+    }
 
-
-        // Borde göra koll att $metodName finns som fil i konfigurationen
-
-
-
-        $data = array_merge(
-            $data,
-            ['routes' => $this->config['items'], 'currentRoute' => $this->app->request->getCurrentUrl()]
-        );
-
-        return $this->renderMenu($this->config['views'][$methodName], $data);
+    /**
+     * Yield all routes from config.
+     *
+     * @return \Generator
+     */
+    public function routes()
+    {
+        foreach ($this->config['items'] as $route) {
+            yield $route;
+        }
     }
 }

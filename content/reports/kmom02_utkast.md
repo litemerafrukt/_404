@@ -6,11 +6,11 @@ Jag tror inte jag själv skulle välja att ha navbaren som en klass på det sät
 
 Jag tycker inte om att lägga in html-genererande funktioner i klasser, känslan blir att jag blandar ihop logik och presentation. Om jag till exempel vill ändra från bootstrap vill jag bara ändra i mina view-filer inte gå in i mina klasser och ändra. Därför har jag löst min navbar på ett lite speciellt sätt. Min navbar-klass har en metod som heter `mapView` som tar en callback som körs en gång för var route i navbaren. Detta gör att jag kan dela upp logik och presentation och ha flera olika vyer för samma meny (två stycken på min me-sida.) Egentligen anser jag dock att vilka menyer som ska finnas hör till presentationslagret. I tex jinja2 och twig kan man definiera makron i presentationslagret för att uppnå något liknande som här.
 
-Ok, jag löste navbaren genom att ha viewfiler som definieras i config-filen och sedan kan kallas som metoder på navbarklassen genom den magiska __call() metoden. När jag var färdig blev det ett snyggt sätt att använda menyn tex `$app->navbar->headerMenu()` men det kändes väldigt överarbetat och för att lägga till en meny skulle man behöva editera på tre ställen, vyn, config-filen coh skriva en ny vy-fil för menyn. Snacka om att gå över ån efter vatten.
+Ok, jag löste navbaren genom att ha viewfiler som definieras i config-filen och sedan kan kallas som metoder på navbarklassen genom den magiska __call() metoden. När jag var färdig blev det ett snyggt sätt att använda menyn tex `<?= $app->navbar->headerMenu() ?>` men det kändes väldigt överarbetat och för att lägga till en meny skulle man behöva editera på tre ställen, vyn, config-filen och skriva en ny vy-fil för menyn. Snacka om att gå över ån efter vatten.
 
-Läste sedan att navbar-klassen bara ska underlätta för skapandet av html. Sagt och gjort, det blev en tredje implimentation av navbaren. Denna gång får navbar klassen bara vara en wrapper över config-arrayen. Det innebär att vy-koden för  menyn skrivs där jag tycker den hör hemma, i vyn.
+Läste sedan att navbar-klassen bara ska underlätta för skapandet av html. Sagt och gjort, det blev en tredje implimentation av navbaren. Denna gång får navbar-klassen bara vara en wrapper över config-arrayen. Det innebär att vy-koden för  menyn skrivs där jag tycker den hör hemma, i vyn. Tredje implimentationen följer uppgiftens 5:e krav, "Välj ett sätt att använda navbaren som känns bekvämt".
 
-Då jag inte riktigt vet om jag tolkat kraven på rätt sätt taggade jag min andra implementation av navbaren med "grose-navbar" om det finns intresse att kolla hur det såg ut.
+Då jag inte riktigt vet om jag tolkat kraven på rätt sätt taggade jag min andra implimentation av navbaren med "grose-navbar" om det finns intresse att kolla hur det såg ut.
 
 Min navbar har inget stöd för undermenyer, det får komma när det behövs.
 
