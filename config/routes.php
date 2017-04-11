@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Public routes.
  */
+
 $app->router->add("", function () use ($app) {
     $app->view->add("layout", ["title" => "Hem"], "layout");
     $app->view->add("index", [], "main");

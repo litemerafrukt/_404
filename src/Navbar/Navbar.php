@@ -28,12 +28,46 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
     /**
      * Render the navbar with a supplied callback
      *
-     * @param callable $viewCallback the callback receives route as first param and text as second
+     * @param callable $callback the callback receives route as first param and text as second
      */
-    public function mapView($viewCallback)
+//    public function each($callback)
+//    {
+//        foreach ($this->config["items"] as $navItem) {
+//            $callback($this->app->url->create($navItem['route']), $navItem['text']);
+//        }
+//    }
+
+    private function renderMenu($file, $data)
     {
-        foreach ($this->config["items"] as $navItem) {
-            $viewCallback($this->app->url->create($navItem['route']), $navItem['text']);
+        ob_start();
+
+        if (!file_exists($file)) {
+            throw new \Exception("Menu template not found: $file.");
         }
+
+        extract($data);
+
+        include $file;
+
+        $output = ob_get_clean();
+
+        return $output;
+    }
+
+    public function __call($methodName, $data = [])
+    {
+
+
+
+        // Borde göra koll att $metodName finns som fil i konfigurationen
+
+
+
+        $data = array_merge(
+            $data,
+            ['routes' => $this->config['items'], 'currentRoute' => $this->app->request->getCurrentUrl()]
+        );
+
+        return $this->renderMenu($this->config['views'][$methodName], $data);
     }
 }

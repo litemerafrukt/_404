@@ -40,9 +40,10 @@
                 <a class="navbar-brand" href="<?= $app->navbar->getRoute('home') ?>">Me oophp</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <?php $app->navbar->mapView(require __DIR__ . "/navbar2/headerView.php") ?>
-                </ul>
+<!--                <ul class="nav navbar-nav navbar-right">-->
+<!--                    --><?php //$app->navbar->each(require __DIR__ . "/navbar2/headerView.php") ?>
+<!--                </ul>-->
+                <?= $app->navbar->headerMenu(); ?>
             </div>
         </div>
     </nav>
@@ -58,9 +59,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <?php $app->navbar->mapView(require __DIR__ . "/navbar2/footerView.php") ?>
-                    </ul>
+                    <?= $app->navbar->footerMenu(); ?>
                     <hr>
                     <div class="copyright text-muted small">
                         <p>

@@ -14,4 +14,5 @@ require_once _404_INSTALL_PATH . '/config/bootstrap.php';
 // Routing
 require_once _404_INSTALL_PATH . '/config/routes.php';
 require_once _404_INSTALL_PATH . '/config/internal_routes.php';
+
 $app->router->handle($app->request->getRoute());

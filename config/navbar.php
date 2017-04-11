@@ -1,22 +1,22 @@
 <?php
 
 return [
-//     not used currently
-//    "config" => [
-//        "navbar-class" => "extra-style-navbar"
-//    ],
+    "views" => [
+        "headerMenu" => _404_APP_PATH . "/view/navbar2/headerView.php",
+        "footerMenu" => _404_APP_PATH . "/view/navbar2/footerView.php",
+    ],
     "items" => [
         "home" => [
             "text" => "Hem",
-            "route" => "",
+            "route" => $this->app->url->create(""),
         ],
         "reports" => [
             "text" => "Rapporter",
-            "route" => "reports",
+            "route" => $this->app->url->create("reports"),
         ],
         "about" => [
             "text" => "Om",
-            "route" => "about",
+            "route" => $this->app->url->create("about"),
         ],
     ]
 ];
