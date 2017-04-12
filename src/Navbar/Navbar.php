@@ -18,59 +18,44 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
      * @param string $item name of route in config
      * @return string route
      */
-    public function getRouteFor($item)
+    public function getRoute($item)
     {
         return $this->app->url->create(
             $this->config['items'][$item]['route']
         );
     }
 
-    /**
-     * Get fully qualified route for item.
-     *
-     * @param $item
-     * @return string route
-     */
-    public function getRoute($item)
+    private function renderMenu($file, $data)
     {
-        return $this->app->url->create(
-            $item['route']
-        );
-    }
+        ob_start();
 
-    /**
-     * Get text for item.
-     *
-     * @param $item
-     * @return mixed
-     */
-    public function getText($item)
-    {
-        return $item['text'];
-    }
-
-    /**
-     * Returns true if $route is the current route
-     *
-     * @param $routeItem
-     * @return bool
-     */
-    public function isCurrentRoute($routeItem)
-    {
-        $currentRoute = $this->app->request->getCurrentUrl();
-        $route = $this->app->url->create($routeItem['route']);
-        return  $currentRoute == $route;
-    }
-
-    /**
-     * Yield all routes from config.
-     *
-     * @return \Generator
-     */
-    public function routes()
-    {
-        foreach ($this->config['items'] as $route) {
-            yield $route;
+        if (!file_exists($file)) {
+            throw new \Exception("Menu template not found: $file.");
         }
+
+        extract($data);
+
+        include $file;
+
+        $output = ob_get_clean();
+
+        return $output;
+    }
+
+    public function __call($methodName, $data = [])
+    {
+
+
+
+        // TODO: Borde göra koll att $metodName finns som fil i konfigurationen, annars kasta error
+
+
+
+        $data = array_merge(
+            $data,
+            ['routes' => $this->config['items'], 'currentRoute' => $this->app->request->getCurrentUrl()]
+        );
+
+        return $this->renderMenu($this->config['views'][$methodName], $data);
     }
 }

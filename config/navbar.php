@@ -1,22 +1,26 @@
 <?php
 
 return [
+    "views" => [
+        "headerMenu" => _404_APP_PATH . "/view/navbar2/headerView.php",
+        "footerMenu" => _404_APP_PATH . "/view/navbar2/footerView.php",
+    ],
     "items" => [
         "home" => [
             "text" => "Hem",
-            "route" => "",
+            "route" => $this->app->url->create("index.php"),
         ],
         "reports" => [
             "text" => "Rapporter",
-            "route" => "reports",
+            "route" => $this->app->url->create("reports"),
         ],
         "session_testing" => [
             "text" => "Session",
-            "route" => "session",
+            "route" => $this->app->url->create("session"),
         ],
         "about" => [
             "text" => "Om",
-            "route" => "about",
+            "route" => $this->app->url->create("about"),
         ],
     ]
 ];

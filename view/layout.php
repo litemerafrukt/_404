@@ -37,15 +37,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?= $app->navbar->getRouteFor('home') ?>">Me oophp</a>
+                <a class="navbar-brand" href="<?= $app->navbar->getRoute('home') ?>">Me oophp</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <?php foreach ($app->navbar->routes() as $route) : ?>
-                        <li class="<?= $app->navbar->isCurrentRoute($route) ? 'active': '' ?>">
-                            <a href="<?= $app->navbar->getRoute($route) ?>"><?= $app->navbar->getText($route) ?></a>
-                        </li>
-                    <?php endforeach; ?>
+                    <?= $app->navbar->headerMenu(); ?>
                 </ul>
             </div>
         </div>
@@ -63,11 +59,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-inline">
-                        <?php foreach ($app->navbar->routes() as $route) : ?>
-                            <li class="">
-                                <a href="<?= $app->navbar->getRoute($route) ?>"><?= $app->navbar->getText($route) ?></a>
-                            </li>
-                        <?php endforeach; ?>
+                        <?= $app->navbar->footerMenu(); ?>
                     </ul>
                     <hr>
                     <div class="copyright text-muted small">
