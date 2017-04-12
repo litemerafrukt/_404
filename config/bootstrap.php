@@ -41,6 +41,8 @@ $app->view->configure("view.php");
 $app->navbar->setApp($app);
 $app->navbar->configure("navbar.php");
 
-
 // Markdown kmom-reports setup
 $app->reports = new \_404\Articles\Articles(_404_APP_PATH . "/content/reports");
+
+// Session setup
+$app->session = new \_404\Session\Session('spensnogsnibbihop');
