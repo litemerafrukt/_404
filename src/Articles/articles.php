@@ -2,8 +2,6 @@
 
 namespace _404\Articles;
 
-//require_once 'article.php';
-
 /**
  * Collection of articles
 */
