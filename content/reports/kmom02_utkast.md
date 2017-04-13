@@ -14,6 +14,8 @@ Då jag inte riktigt vet om jag tolkat kraven på rätt sätt taggade jag min an
 
 Min navbar har inget stöd för undermenyer, det får komma när det behövs.
 
+Vad gäller logik i vyerna håller jag med om att hålla vyerna dumma. Jag försöker hålla logiken i mina egna vyer på en nivå som känns brukligt i de ramverk som jag tittat på tidigare. Det innebär nån if-sats här och där och en eller annan foreach. ---- Nödvändigt att ha med????????
+
 Jag vet inte vad som avses med logik kontra vy i denna kursen men jag tror att min egen definition är färgad av hur jag sett andra ramverk lösa vy-delarna. Om vi tar jinja2, som har en själsfrände i Twig hos php, som exempel så finns där möjlighet till villkor, loopar, includes och makron. Detta kanske kan heta presentationslogik? Personligen anser jag att sådan presentationslogik får finnas i vy-lagret, tex att sätta en css-klass beroende av en medskickad variabel. Detta går igen i js-ramverk som mithril, vue, react med jsx och i flasks jinja2, laravels blade, symfony:s Twig, express js pug, rails haml osv. Listan blir så lång att jag tror jag måste missuppfattat hur logik kontra vyer definieras i denna kursen...
 
 Oj vad phpcs vill göra koden verbose. Vill jag använda ens lite tekniker från funktionell programmering tycker jag att phpcs slår sönder läsbarheten.

@@ -25,6 +25,14 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
         );
     }
 
+    /**
+     * Render the menu with view file.
+     *
+     * @param $file
+     * @param $data
+     * @return string
+     * @throws \Exception
+     */
     private function renderMenu($file, $data)
     {
         ob_start();
@@ -42,14 +50,29 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
         return $output;
     }
 
+    /**
+     * Validate that method name is present in config. Else throw.
+     *
+     * @param $methodName
+     * @throws \BadMethodCallException
+     */
+    private function validateViewMethod($methodName)
+    {
+        if (! array_key_exists($methodName, $this->config['views'])) {
+            throw new \BadMethodCallException('No view method named: ' . $methodName);
+        }
+    }
+
+    /**
+     * Make views from config callable. PHP magic method.
+     *
+     * @param $methodName
+     * @param array $data
+     * @return string
+     */
     public function __call($methodName, $data = [])
     {
-
-
-
-        // TODO: Borde göra koll att $metodName finns som fil i konfigurationen, annars kasta error
-
-
+        $this->validateViewMethod($methodName);
 
         $data = array_merge(
             $data,
