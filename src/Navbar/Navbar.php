@@ -6,11 +6,14 @@ use Anax\Common\AppInjectableInterface;
 use Anax\Common\AppInjectableTrait;
 use Anax\Common\ConfigureInterface;
 use Anax\Common\ConfigureTrait;
+use _404\Component\ComponentRenderInterface;
+use _404\Component\ComponentRenderTrait;
 
-class Navbar implements AppInjectableInterface, ConfigureInterface
+class Navbar implements AppInjectableInterface, ConfigureInterface, ComponentRenderInterface
 {
     use ConfigureTrait;
     use AppInjectableTrait;
+    use ComponentRenderTrait;
 
     /**
      * Get fully qualified route from config.
@@ -26,44 +29,6 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
     }
 
     /**
-     * Render the menu with view file.
-     *
-     * @param $file
-     * @param $data
-     * @return string
-     * @throws \Exception
-     */
-    private function renderMenu($file, $data)
-    {
-        ob_start();
-
-        if (!file_exists($file)) {
-            throw new \Exception("Menu template not found: $file.");
-        }
-
-        extract($data);
-
-        include $file;
-
-        $output = ob_get_clean();
-
-        return $output;
-    }
-
-    /**
-     * Validate that method name is present in config. Else throw.
-     *
-     * @param $methodName
-     * @throws \BadMethodCallException
-     */
-    private function validateViewMethod($methodName)
-    {
-        if (! array_key_exists($methodName, $this->config['views'])) {
-            throw new \BadMethodCallException('No view method named: ' . $methodName);
-        }
-    }
-
-    /**
      * Make views from config callable. PHP magic method.
      *
      * @param $methodName
@@ -74,11 +39,13 @@ class Navbar implements AppInjectableInterface, ConfigureInterface
     {
         $this->validateViewMethod($methodName);
 
-        $data = array_merge(
-            $data,
-            ['routes' => $this->config['items'], 'currentRoute' => $this->app->request->getCurrentUrl()]
-        );
+        $viewData = [
+            'routes' => $this->config['items'],
+            'currentRoute' => $this->app->request->getCurrentUrl(),
+        ];
 
-        return $this->renderMenu($this->config['views'][$methodName], $data);
+        $viewData = array_merge($viewData, $data);
+
+        return $this->renderComponent($this->config['views'][$methodName], $viewData);
     }
 }

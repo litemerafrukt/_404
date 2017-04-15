@@ -39,3 +39,4 @@ Hur som helst vill jag ju inte bara testa min modifierade Url-legobit mot test-c
 
 Efter att ha börjat pula runt med bitarna i ramverket börjar så smått anax-light och jag kunna umgås lite mer avslappnat. För att visa lite god vilja fick projektet en stjärna på github. Jag vet dock inte om jag tycker om view-klassen, känns lite som om den rör sig för mycket över gränsen mellan logik och presentation.
 
+Jag valde att implementera en egen klass för svenska högtider som ska funka oberoende av år. Det tog en bra stund att skriva ihop den klassen och den skulle behöva revideras en aning men det får bli en annan gång. 

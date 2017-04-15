@@ -58,3 +58,81 @@ img {
     color: #AAA;
 }
 
+/**
+Calender classes
+ */
+.calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.calendar-table {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+
+.calendar-head {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #ddd;
+}
+
+.calendar-week {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.calendar-weekday {
+    text-align: center;
+}
+
+.calendar-cell {
+    text-align: right;
+    border: 1px solid #ddd;
+    flex-grow: 1;
+    height: 87px;
+    width: 100%;
+    padding: 0.3em;
+    overflow: hidden;
+}
+
+.calendar-holiday {
+    color: #c43c35;
+}
+
+.calendar-holiday-name {
+    font-weight: lighter;
+}
+
+.calendar-number {
+    font-size: large;
+    margin-bottom: 0.1rem;
+}
+
+.calendar-today {
+    background-color: #f3f3f3;
+}
+
+@media all and (max-width: 550px) {
+    .calendar-hide-small {
+        display: none;
+    }
+}
+
+@media all and (max-width: 800px) {
+    .calendar-cell {
+        height: 70px;
+    }
+
+    .calendar-holiday-name {
+        font-size: x-small;
+    }
+}
+
+.calendar-mute {
+    background-color: #e5e5e5;
+}

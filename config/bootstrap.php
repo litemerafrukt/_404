@@ -13,6 +13,9 @@ define("ANAX_APP_PATH", _404_APP_PATH);
 require_once _404_INSTALL_PATH . "/config/error_reporting.php";
 require_once _404_INSTALL_PATH . "/vendor/autoload.php";
 
+// Set default timezone
+date_default_timezone_set('Europe/Stockholm');
+
 $app = new \_404\App\App();
 
 $app->request  = (new \Anax\Request\Request())->init();

@@ -33,7 +33,6 @@ class Article
         $filename = basename($filepath);
         // get date part and namepart (eg 2016-06-11_name_fin.md)
         $filenameParts = explode('_', $filename);
-        date_default_timezone_set('Europe/Stockholm');
         $this->articleDate = strtotime($filenameParts[0]);
         $this->articleTitle = $filenameParts[1];
     }
