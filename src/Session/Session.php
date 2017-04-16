@@ -35,6 +35,7 @@ class Session
      * Check if key exist in session
      *
      * @param string $key
+     * @return bool
      */
     public function has($key)
     {

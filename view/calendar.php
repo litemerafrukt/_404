@@ -1,3 +1,5 @@
 <div class="container">
-    <?= $calendar ?>
+    <div class="">
+        <?= $calendar ?>
+    </div>
 </div>

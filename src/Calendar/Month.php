@@ -83,7 +83,12 @@ class Month
         foreach (range($from, $too) as $dayNumber) {
             $date = new \DateTimeImmutable("$this->year-$this->month-$dayNumber");
             $isToday = (new \DateTimeImmutable())->format('Y-m-d') == $date->format('Y-m-d');
-            yield new Day($dayNumber, $date->format('D'), $isToday, $this->holidays->name($date));
+            yield new Day(
+                $dayNumber,
+                $date->format('D'),
+                $isToday,
+                $this->holidays->name($date)
+            );
         }
     }
 

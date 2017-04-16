@@ -12,7 +12,7 @@
                             <a href="#kmom01" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-up fa-fw"></i> <span class="network-name">K1</span></a>
                         </li>
                         <li>
-                            <a href="#kmom02" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-down fa-fw"></i> <span class="network-name">K2</span></a>
+                            <a href="#kmom02" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-up fa-fw"></i> <span class="network-name">K2</span></a>
                         </li>
                         <li>
                             <a href="#kmom03" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-down fa-fw"></i> <span class="network-name">K3</span></a>
@@ -49,13 +49,28 @@
                 <p class="report-date"><?= $app->reports->article('Kmom01')->date() ?></p>
 
                 <?= $app->reports->article('Kmom01')->html() ?>
+            </div>
         </div>
-
     </div>
 </div>
 
 
 <a name="kmom02"></a>
+<div class="content-section-a">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-9 lead">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Kmom02</h2>
+
+                <p class="report-date"><?= $app->reports->article('Kmom02')->date() ?></p>
+
+                <?= $app->reports->article('Kmom02')->html() ?>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <a name="kmom03"></a>
 

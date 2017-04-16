@@ -136,3 +136,11 @@ Calender classes
 .calendar-mute {
     background-color: #e5e5e5;
 }
+
+/*
+Test some flexbox-magic to get tiny calendar.
+Doesn't work quite yet. If I would start using less...
+ */
+.tiny-calendar {
+    max-width: 650px;
+}
