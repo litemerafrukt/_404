@@ -2,12 +2,12 @@
 
 namespace _404\Globals;
 
-use _404\Types\Either\EitherFactoryInterface;
-use _404\Types\Either\Right;
-use _404\Types\Either\Left;
 use _404\Types\Maybe\MaybeFactoryInterface;
 use _404\Types\Maybe\Just;
 use _404\Types\Maybe\Nothing;
+use _404\Types\Either\EitherFactoryInterface;
+use _404\Types\Either\Right;
+use _404\Types\Either\Left;
 
 /**
  * Class Post

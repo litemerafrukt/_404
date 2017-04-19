@@ -48,7 +48,7 @@ class Right implements Either
     }
 
     /**
-     * Returns the value in Just.
+     * Returns this.
      *
      * @param Either $either
      * @return Either
