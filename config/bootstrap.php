@@ -49,3 +49,6 @@ $app->reports = new \_404\Articles\Articles(_404_APP_PATH . "/content/reports");
 
 // Session setup
 $app->session = new \_404\Session\Session('spensnogsnibbihop');
+
+// Cookies!
+$app->cookie = new \_404\Cookie\Cookie();
