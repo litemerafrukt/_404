@@ -1,0 +1,46 @@
+<?php
+
+namespace _404\Globals;
+
+use _404\Types\Maybe\MaybeFactoryInterface;
+use _404\Types\Maybe\Just;
+use _404\Types\Maybe\Nothing;
+use _404\Types\Either\EitherFactoryInterface;
+use _404\Types\Either\Left;
+use _404\Types\Either\Right;
+
+/**
+ * Class Get
+ *
+ * Get a value from GET superglobal in form of a Maybe or Either.
+ *
+ * @package _404\Globals
+ */
+class Get implements MaybeFactoryInterface, EitherFactoryInterface
+{
+    /**
+     * Get a Maybe from GET.
+     *
+     * @param $key
+     * @return Just|Nothing
+     */
+    public static function maybe($key)
+    {
+        return isset($_GET[$key])
+            ? new Just($_GET[$key])
+            : new Nothing(null);
+    }
+
+    /**
+     * Get a Either from GET.
+     *
+     * @param $key
+     * @return Right|Left
+     */
+    public static function either($key)
+    {
+        return isset($_GET[$key])
+            ? new Right($_GET[$key])
+            : new Left($key . ' not found');
+    }
+}

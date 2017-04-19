@@ -10,7 +10,7 @@ class Session
     /**
      * Session constructor.
      *
-     * @param $name session name
+     * @param string $name session name
      */
     public function __construct($name)
     {
