@@ -12,7 +12,7 @@ return [
     "items" => [
         "home" => [
             "text"  => "Hem",
-            "route" => $this->app->url->create("index.php"),
+            "route" => $this->app->url->create(""),
         ],
         "reports" => [
             "text"  => "Rapporter",
@@ -30,5 +30,9 @@ return [
             "text"  => "Om",
             "route" => $this->app->url->create("about"),
         ],
+        "login" => [
+            "text"  => "Logga in",
+            "route" => $this->app->url->create("?login=show"),
+        ]
     ]
 ];

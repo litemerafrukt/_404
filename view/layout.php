@@ -40,9 +40,17 @@
                 <a class="navbar-brand" href="<?= $app->navbar->getRoute('home') ?>">Me oophp</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <?= $app->navbar->headerMenu(); ?>
-                </ul>
+                <?= $app->navbar->headerMenu(); ?>
+            </div>
+            <div class="<?= $app->request->getGet('login') ? '' : 'hidden' ?>">
+                <form class="navbar-text navbar-right" action="">
+                    <label for="user">Användarnamn: </label>
+                    <input id="user" type="text">
+                    <label for="password">Lösenord: </label>
+                    <input id="password" type="password">
+                    <button id="login-attempt" type="submit" class="btn">Logga in</button>
+                    <button id="login-cancel" class="btn">Avbryt</button>
+                </form>
             </div>
         </div>
     </nav>
@@ -58,9 +66,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <ul class="list-inline">
                         <?= $app->navbar->footerMenu(); ?>
-                    </ul>
                     <hr>
                     <div class="copyright text-muted small">
                         <p>
