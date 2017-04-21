@@ -64,7 +64,10 @@ class Right implements Either
      * Filter the value, return Right|Left depending on predicate.
      *
      * @param $filterFunc
+     * @param $error
      * @return Either
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function filter($filterFunc, $error)
     {

@@ -16,7 +16,7 @@ $app->router->add('calendar/{year:digit}/{month:digit}', function ($year, $month
     $year = $year < 1 ? 1 : $year;
     $month = $month < 1 ? 1 : ($month > 12 ? 12 : $month);
 
-    $calendar = new \_404\Calendar\WallCalendar($year, $month);
+    $calendar = new \_404\Components\Calendar\WallCalendar($year, $month);
     $calendar->setApp($app);
     $calendar->configure("calendar.php");
 

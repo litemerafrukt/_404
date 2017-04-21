@@ -18,37 +18,50 @@ date_default_timezone_set('Europe/Stockholm');
 
 $app = new \_404\App\App();
 
-$app->request  = (new \Anax\Request\Request())->init();
-$app->response = new \Anax\Response\Response();
-$app->url      = new \_404\Url\Url();
-$app->router   = new \Anax\Route\RouterInjectable();
-$app->view     = new \Anax\View\ViewContainer();
-$app->navbar   = new \_404\Navbar\Navbar();
+// Framework
+$app->request       = (new Anax\Request\Request())->init();
+$app->response      = new Anax\Response\Response();
+$app->url           = new _404\Url\Url();
+$app->router        = new Anax\Route\RouterInjectable();
+$app->view          = new Anax\View\ViewContainer();
+// Database
+$app->dbconnection  = new _404\Database\DatabaseConnection();
+// Globals
+$app->session       = new _404\Globals\Session('spensnogsnibbihop');
+$app->post          = new _404\Globals\Post();
+$app->get           = new _404\Globals\Get();
+$app->server        = new _404\Globals\Server();
+$app->cookie        = new _404\Globals\Cookie();
+// Components
+$app->navbar        = new _404\Components\Navbar\Navbar();
+$app->loginbutton   = new _404\Components\LoginButton\LoginButton();
+$app->reports       = new \_404\Components\Articles\Articles(_404_APP_PATH . "/content/reports");
 
-// Url init
+
+// Url setup
 $app->url->setSiteUrl($app->request->getSiteUrl())
          ->setBaseUrl($app->request->getBaseUrl())
          ->setStaticSiteUrl($app->request->getSiteUrl())
          ->setStaticBaseUrl($app->request->getBaseUrl())
          ->setScriptName($app->request->getScriptName());
-
-// Fetch from config
 $app->url->configure("url.php");
 $app->url->setDefaultsFromConfiguration();
+
+// Database connection setup
+$app->dbconnection->configure("database.php");
+$app->dbconnection->connect();
 
 // View setup
 $app->view->setApp($app);
 $app->view->configure("view.php");
 
-// Navbar setup
+// Session setup
+$app->session->start();
+
+// Loginbutton setup, uses session
+$app->loginbutton->setApp($app);
+$app->loginbutton->configure("loginbutton.php");
+
+// Navbar setup, uses loginbutton
 $app->navbar->setApp($app);
 $app->navbar->configure("navbar.php");
-
-// Markdown kmom-reports setup
-$app->reports = new \_404\Articles\Articles(_404_APP_PATH . "/content/reports");
-
-// Session setup
-$app->session = new \_404\Session\Session('spensnogsnibbihop');
-
-// Cookies!
-$app->cookie = new \_404\Cookie\Cookie();

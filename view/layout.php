@@ -42,16 +42,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <?= $app->navbar->headerMenu(); ?>
             </div>
-            <div class="<?= $app->request->getGet('login') ? '' : 'hidden' ?>">
-                <form class="navbar-text navbar-right" action="">
-                    <label for="user">Användarnamn: </label>
-                    <input id="user" type="text">
-                    <label for="password">Lösenord: </label>
-                    <input id="password" type="password">
-                    <button id="login-attempt" type="submit" class="btn">Logga in</button>
-                    <button id="login-cancel" class="btn">Avbryt</button>
-                </form>
-            </div>
+            <?= $app->loginbutton->form(); ?>
         </div>
     </nav>
 

@@ -16,6 +16,9 @@ require_once _404_INSTALL_PATH . '/config/bootstrap.php';
 require_once _404_INSTALL_PATH . '/config/routes/me-core.php';
 require_once _404_INSTALL_PATH . '/config/routes/calendar.php';
 require_once _404_INSTALL_PATH . '/config/routes/session-test.php';
+require_once _404_INSTALL_PATH . '/config/routes/post-handlers/login.php';
+require_once _404_INSTALL_PATH . '/config/routes/user.php';
+
 // Internal routes
 require_once _404_INSTALL_PATH . '/config/routes/internal_routes.php';
 

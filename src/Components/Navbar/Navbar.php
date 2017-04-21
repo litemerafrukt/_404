@@ -1,6 +1,6 @@
 <?php
 
-namespace _404\Navbar;
+namespace _404\Components\Navbar;
 
 use Anax\Common\AppInjectableInterface;
 use Anax\Common\AppInjectableTrait;

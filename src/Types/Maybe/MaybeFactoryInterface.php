@@ -4,5 +4,5 @@ namespace _404\Types\Maybe;
 
 interface MaybeFactoryInterface
 {
-    public static function maybe($thing);
+    public function maybe($thing);
 }

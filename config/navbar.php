@@ -31,7 +31,7 @@ return [
             "route" => $this->app->url->create("about"),
         ],
         "login" => [
-            "text"  => "Logga in",
+            "text"  => '<i class="fa fa-user"></i> ' . $this->app->loginbutton->user('Logga in'),
             "route" => $this->app->url->create("?login=show"),
         ]
     ]

@@ -155,22 +155,19 @@
         },
         {
             "name": "anax/router",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/canax/router.git",
-                "reference": "29755b0357407b503866779236fa69c0fe1a87f1"
+                "reference": "ad31bba5bc94cd74e31ab52e69365ffcf4f5c09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/canax/router/zipball/29755b0357407b503866779236fa69c0fe1a87f1",
-                "reference": "29755b0357407b503866779236fa69c0fe1a87f1",
+                "url": "https://api.github.com/repos/canax/router/zipball/ad31bba5bc94cd74e31ab52e69365ffcf4f5c09b",
+                "reference": "ad31bba5bc94cd74e31ab52e69365ffcf4f5c09b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
-            },
-            "require-dev": {
                 "php": ">=5.6"
             },
             "type": "library",
@@ -200,7 +197,7 @@
                 "micro",
                 "mvc"
             ],
-            "time": "2017-03-26T20:55:23+00:00"
+            "time": "2017-04-13T11:20:20+00:00"
         },
         {
             "name": "anax/view",

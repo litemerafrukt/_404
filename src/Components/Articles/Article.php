@@ -1,6 +1,6 @@
 <?php
 
-namespace _404\Articles;
+namespace _404\Components\Articles;
 
 use Parsedown;
 

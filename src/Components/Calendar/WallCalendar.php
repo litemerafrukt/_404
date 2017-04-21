@@ -1,6 +1,6 @@
 <?php
 
-namespace _404\Calendar;
+namespace _404\Components\Calendar;
 
 use _404\Component\ComponentRenderInterface;
 use _404\Component\ComponentRenderTrait;

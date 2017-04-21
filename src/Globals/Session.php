@@ -1,8 +1,15 @@
 <?php
 
-namespace _404\Session;
+namespace _404\Globals;
 
-class Session
+use _404\Types\Either\EitherFactoryInterface;
+use _404\Types\Either\Left;
+use _404\Types\Either\Right;
+use _404\Types\Maybe\MaybeFactoryInterface;
+use _404\Types\Maybe\Just;
+use _404\Types\Maybe\Nothing;
+
+class Session implements MaybeFactoryInterface, EitherFactoryInterface
 {
 
     private $name;
@@ -65,6 +72,32 @@ class Session
         return $this->has($key)
             ? $_SESSION[$key]
             : $default;
+    }
+
+    /**
+     * Get a Maybe from $_SESSION.
+     *
+     * @param $key
+     * @return Just|Nothing
+     */
+    public function maybe($key)
+    {
+        return $this->has($key)
+            ? new Just($_SESSION[$key])
+            : new Nothing(null);
+    }
+
+    /**
+     * Get an Either from $_SESSION.
+     *
+     * @param $key
+     * @return Right|Left
+     */
+    public function either($key)
+    {
+        return $this->has($key)
+            ? new Right($_SESSION[$key])
+            : new Left($key . ' not found');
     }
 
     /**

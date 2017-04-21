@@ -1,6 +1,6 @@
 <?php
 
-namespace _404\Cookie;
+namespace _404\Globals;
 
 class Cookie
 {
@@ -32,7 +32,7 @@ class Cookie
      * Sets a cookie
      *
      * @param $name string The name of the $_COOKIE
-     * @param $val string The value of the $_COOKIE
+     * @param $value string The value of the $_COOKIE
      * @return void
      */
     public function set($name, $value)

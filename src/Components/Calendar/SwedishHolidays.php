@@ -1,6 +1,6 @@
 <?php
 
-namespace _404\Calendar;
+namespace _404\Components\Calendar;
 
 /**
  * Class SwedishHolidays

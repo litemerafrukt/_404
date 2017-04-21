@@ -144,3 +144,12 @@ Doesn't work quite yet. If I would start using less...
 .tiny-calendar {
     max-width: 650px;
 }
+
+/*
+Helpers
+ */
+.right-divider {
+    border-right: 1px solid #b3b3b3;
+    padding-right: 2rem;
+    margin-right: 2rem;
+}

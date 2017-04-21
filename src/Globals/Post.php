@@ -24,7 +24,7 @@ class Post implements EitherFactoryInterface, MaybeFactoryInterface
      * @param $key
      * @return Just|Nothing
      */
-    public static function maybe($key)
+    public function maybe($key)
     {
         return isset($_POST[$key])
             ? new Just($_POST[$key])
@@ -37,7 +37,7 @@ class Post implements EitherFactoryInterface, MaybeFactoryInterface
      * @param $key
      * @return Right|Left
      */
-    public static function either($key)
+    public function either($key)
     {
         return isset($_POST[$key])
             ? new Right($_POST[$key])
