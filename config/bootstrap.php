@@ -8,6 +8,8 @@
 define("ANAX_INSTALL_PATH", _404_INSTALL_PATH);
 define("ANAX_APP_PATH", _404_APP_PATH);
 
+// Some constants
+define("_404_APP_ADMIN_LEVEL", 1);
 
 // Includes
 require_once _404_INSTALL_PATH . "/config/error_reporting.php";

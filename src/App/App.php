@@ -34,4 +34,19 @@ class App
 
         $this->redirect($previousRoute);
     }
+
+    /**
+     * Previous route without query.
+     *
+     * @return string - previous route or homepage. No query.
+     */
+    public function previousRoute()
+    {
+        return $this->server->maybe('HTTP_REFERER')
+            ->map(function ($referer) {
+                $noQuery = explode("?", $referer)[0];
+                return $this->url->create($noQuery);
+            })
+            ->withDefault($this->url->create(""));
+    }
 }

@@ -2,7 +2,14 @@
 
 namespace _404\Globals;
 
-class Cookie
+use _404\Types\Either\EitherFactoryInterface;
+use _404\Types\Either\Left;
+use _404\Types\Either\Right;
+use _404\Types\Maybe\MaybeFactoryInterface;
+use _404\Types\Maybe\Just;
+use _404\Types\Maybe\Nothing;
+
+class Cookie implements MaybeFactoryInterface, EitherFactoryInterface
 {
     private $expire;
 
@@ -37,7 +44,7 @@ class Cookie
      */
     public function set($name, $value)
     {
-        setcookie($name, $value, time() + $this->expire);
+        setcookie($name, $value, time() + $this->expire, '/');
     }
 
     /**
@@ -54,6 +61,31 @@ class Cookie
             : $default;
     }
 
+    /**
+     * Get a Maybe from $_SESSION.
+     *
+     * @param $key
+     * @return Just|Nothing
+     */
+    public function maybe($key)
+    {
+        return $this->has($key)
+            ? new Just($_COOKIE[$key])
+            : new Nothing(null);
+    }
+
+    /**
+     * Get an Either from $_SESSION.
+     *
+     * @param $key
+     * @return Right|Left
+     */
+    public function either($key)
+    {
+        return $this->has($key)
+            ? new Right($_COOKIE[$key])
+            : new Left($key . ' not found');
+    }
 
     /**
      * Return var_dump of cookie

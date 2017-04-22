@@ -153,3 +153,12 @@ Helpers
     padding-right: 2rem;
     margin-right: 2rem;
 }
+
+.right-margin-2rem {
+    margin-right: 2rem;
+}
+
+.big-horisontal-margins {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}

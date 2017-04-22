@@ -16,10 +16,13 @@ require_once _404_INSTALL_PATH . '/config/bootstrap.php';
 require_once _404_INSTALL_PATH . '/config/routes/me-core.php';
 require_once _404_INSTALL_PATH . '/config/routes/calendar.php';
 require_once _404_INSTALL_PATH . '/config/routes/session-test.php';
-require_once _404_INSTALL_PATH . '/config/routes/post-handlers/login.php';
 require_once _404_INSTALL_PATH . '/config/routes/user.php';
+require_once _404_INSTALL_PATH . '/config/routes/errors.php';
+
+require_once _404_INSTALL_PATH . '/config/routes/post/login-handlers.php';
+require_once _404_INSTALL_PATH . '/config/routes/post/user-handlers.php';
 
 // Internal routes
-require_once _404_INSTALL_PATH . '/config/routes/internal_routes.php';
+require_once _404_INSTALL_PATH . '/config/routes/internals.php';
 
 $app->router->handle($app->request->getRoute());

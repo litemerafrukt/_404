@@ -13,6 +13,7 @@
     <div class="<?= $showForm ? '' : 'hidden' ?>">
         <form class="navbar-text navbar-right" method="post" action="<?= $logoutHandler ?>">
             <span class="right-divider">Inloggad som: <?= $userName ?></span>
+            <a href="<?= $changePassword ?>" class="right-divider">Ändra lösenord</a>
             <a href="<?= $userProfile ?>" class="right-divider">Profil</a>
             <button name="logout" value="logout" class="btn btn-primary btn-sm">Logga ut</button>
             <button name="logout" value="cancel" class="btn btn-warning btn-sm">Avbryt</button>
