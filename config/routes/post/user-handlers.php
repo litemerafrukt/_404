@@ -17,7 +17,7 @@ $app->router->add('handle/user/register', function () use ($app) {
     $emailMaybe     = $app->post->maybe('email')
         ->map('trim')
         ->map('htmlentities');
-    $levelMaybe     = $app->post->maybe('level')
+    $levelMaybe     = $app->post->maybe('userlevel')
         ->map('trim')
         ->map('htmlentities');
     $cookieMaybe = $app->post->maybe('cookie');
