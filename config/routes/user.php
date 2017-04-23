@@ -10,6 +10,8 @@ $app->router->add('user/register', function () use ($app) {
 });
 
 $app->router->add('user/profile', function () use ($app) {
+    $userDb = new _404\Database\Users($app->dbconnection);
+
     // Happy function
     $showProfile = function ($user) use ($app) {
         $userDb = new _404\Database\Users($app->dbconnection);
@@ -22,6 +24,7 @@ $app->router->add('user/profile', function () use ($app) {
             })
             ->withDefault(false);
 
+        $viewData['isAdmin'] = $userDb->isAdmin($app->session->maybe('user')->withDefault($user));
 
         $app->view->add("layout", ["title" => "Användarprofil"], "layout");
         $app->view->add("user/profile", $viewData, "main");
@@ -34,12 +37,14 @@ $app->router->add('user/profile', function () use ($app) {
     $redirectOnNotLoggedIn = function ($error) use ($app) {
         $errQuery = urlencode($error);
         $app->redirect("errorwithinfofromget?login=show&error=$errQuery");
-//        $app->redirect("");
     };
 
+    // Decide
     $app->session->either('user')
-        ->map(function ($user) use ($app) {
-            return $app->get->maybe('newuser')->withDefault($user);
+        ->map(function ($user) use ($app, $userDb) {
+            return $userDb->isAdmin($user)
+                ? $app->get->maybe('user')->withDefault($user)
+                : $user;
         })
         ->resolve($showProfile, $redirectOnNotLoggedIn);
 });

@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-1">Kaka: </label>
                 <div class="col-sm-4">
-                    <input required type="text" name="cookie" class="form-control" placeholder="Sätt kaka" value="<?= $app->cookie->maybe($username)->withDefault('') ?>" />
+                    <input type="text" name="cookie" class="form-control" placeholder="Sätt kaka" value="<?= htmlentities($app->cookie->maybe($username)->withDefault('')) ?>" />
                 </div>
             </div>
             <div class="form-group">
@@ -35,9 +35,17 @@
             <h5><span class="col-sm-2">Level: </span><span class="col-sm-10"><?= $userlevel ?></span></h5>
         </div>
         <div class="row">
-            <h5><span class="col-sm-2">Kaka: </span><span class="col-sm-10"><?= $app->cookie->maybe($username)->withDefault('Sätt din kaka på "Redigera profil"') ?></span></h5>
+            <h5><span class="col-sm-2">Kaka: </span><span class="col-sm-10"><?= htmlentities($app->cookie->maybe($username)->withDefault('Sätt din kaka på "Redigera profil"')) ?></span></h5>
         </div>
         <hr>
-        <a href="<?= $app->url->create("user/profile?edit=true"); ?>">Redigera profil</a>
-    <?php endif; ?>
+        <a href="<?php
+            $queryName = urlencode($username);
+            echo $app->url->create("user/profile?edit=true&user=$queryName");
+        ?>">Redigera profil</a>
+
+        <?php if ($isAdmin) : ?>
+            <br>
+            <a href="<?= $app->url->create('admin/users') ?>">Till admin</a>
+        <?php endif ?>
+    <?php endif ?>
 </div>

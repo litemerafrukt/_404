@@ -4,6 +4,7 @@ namespace _404\Components\LoginButton;
 
 use _404\Component\ComponentRenderInterface;
 use _404\Component\ComponentRenderTrait;
+use _404\Database\Users;
 use Anax\Common\AppInjectableInterface;
 use Anax\Common\AppInjectableTrait;
 use Anax\Common\ConfigureInterface;
@@ -25,16 +26,28 @@ class LoginButton implements AppInjectableInterface, ConfigureInterface, Compone
 
     public function __call($methodName, $data)
     {
+
         $this->validateViewMethod($methodName);
 
-        $viewData = [
-            'showForm'      => $this->app->request->getGet('login'),
-            'userLoggedIn'  => $this->app->session->has('user'),
-            'userName'      => $this->app->session->get('user'),
-        ];
+        $userDb = new Users($this->app->dbconnection);
 
-        $viewData = array_merge($this->config['routes'], $viewData);
-        $viewData = array_merge($viewData, $data);
+        list($userLoggedIn, $username, $isAdmin) = $this->app->session->either('user')
+            ->resolve(
+                function ($user) use ($userDb) {
+                    return [true, $user, _404_APP_ADMIN_LEVEL == $userDb->getLevel($user)];
+                },
+                function () {
+                    return [false, '', 100];
+                }
+            );
+
+        $showLogin  = $this->app->get->maybe('login')->withDefault(false);
+
+        $viewData = array_merge(
+            compact('showLogin', 'userLoggedIn', 'username', 'isAdmin'),
+            $this->config['routes'],
+            $data
+        );
 
         return $this->renderComponent($this->config['views'][$methodName], $viewData);
     }

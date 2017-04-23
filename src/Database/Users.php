@@ -94,6 +94,7 @@ class Users
         $statement = $this->db->prepare("UPDATE oophp_users SET email='$email', userlevel='$level' WHERE username='$user'");
         $statement->execute();
     }
+
     /**
      * Changes the password for a user
      *
@@ -119,5 +120,93 @@ class Users
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         return !$row ? false : true;
+    }
+
+    /**
+     * Delete user
+     *
+     * @param $user string
+     */
+    public function delete($user)
+    {
+        $statement = $this->db->prepare("DELETE FROM oophp_users WHERE username='$user'");
+        $statement->execute();
+    }
+
+    /**
+     * Fetch all users
+     *
+     * @return \stdClass
+     */
+    public function all()
+    {
+        $statement = $this->db->prepare("SELECT * FROM oophp_users");
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Count all users in db
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $statement = $this->db->prepare("SELECT COUNT(id) FROM oophp_users");
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_NUM)[0];
+    }
+
+    /**
+     * Count users filtered on username or email or userlevel
+     *
+     * @param $filter
+     * @return mixed
+     */
+    public function countWithFilter($filter)
+    {
+        $sql = "
+            SELECT COUNT(id) FROM oophp_users 
+            WHERE email LIKE '$filter' OR username LIKE '$filter' OR userlevel LIKE '$filter'
+        ";
+
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_NUM)[0];
+    }
+
+    /**
+     * Get users filtered by username, email, userlevel and ordered and with limit and offset.
+     *
+     * @param $filter
+     * @param $orderBy
+     * @param $order
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
+    public function getUsers($filter, $orderBy, $order, $limit, $offset)
+    {
+        $sql = "
+            SELECT * FROM oophp_users 
+            WHERE email LIKE '$filter' OR username LIKE '$filter' OR userlevel LIKE '$filter'
+            ORDER BY $orderBy $order
+            LIMIT $limit OFFSET $offset
+        ";
+
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Check if a user is admin (userlevel == ADMIN_LEVEL)
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAdmin($user)
+    {
+        return _404_APP_ADMIN_LEVEL == $this->getLevel($user);
     }
 }

@@ -5,10 +5,13 @@ $app->router->add('handle/user/register', function () use ($app) {
 
     $newUserMaybe   = $app->post->maybe('username')
         ->map('trim')
-        ->map('htmlentities')
         ->filter(function ($username) {
             return ! empty($username);
+        })
+        ->filter(function ($username) use ($userDb) {
+            return ! $userDb->exists($username);
         });
+
     $password1Maybe = $app->post->maybe('password-1');
     $password2Maybe = $app->post->maybe('password-2');
     $emailMaybe     = $app->post->maybe('email')
@@ -30,16 +33,20 @@ $app->router->add('handle/user/register', function () use ($app) {
         $password = password_hash($password1Maybe->withDefault(''), PASSWORD_DEFAULT);
         $email = $emailMaybe->withDefault('');
         $level = $levelMaybe->withDefault(3);
+
         $userDb->addUser($username, $password, $email, $level);
+
         // Login user if not logged in
         $app->session->set(
             'user',
             $app->session->maybe('user')->withDefault($username)
         );
         // Set cookie
-        $cookie = $cookieMaybe->withDefault('Din kaka kan du justera på "Redigera profil');
+        $cookie = $cookieMaybe->withDefault('');
         $app->cookie->set($username, $cookie);
-        $app->redirect("user/profile?newuser=$username");
+
+        $urlencodedUsername = urlencode($username);
+        $app->redirect("user/profile?user=$urlencodedUsername");
     };
 
     $notOk = function ($error) use ($app) {
@@ -50,7 +57,7 @@ $app->router->add('handle/user/register', function () use ($app) {
     $eitherSave = $app->post->either('save');
 
     $eitherSave
-        ->filter([$newUserMaybe, 'isJust'], 'No username')
+        ->filter([$newUserMaybe, 'isJust'], 'Username taken.')
         ->filter($checkPasswords, 'Passwords did not match.')
         ->resolve($onOkSaveUser, $notOk);
 });
@@ -71,7 +78,7 @@ $app->router->add('handle/user/edit', function () use ($app) {
         // Set cookie
         $app->cookie->set($user, $cookie);
 
-        $app->redirectBack();
+        $app->redirect("user/profile?user=$user");
     };
 
     $notOk = function ($error) use ($app) {
@@ -80,13 +87,14 @@ $app->router->add('handle/user/edit', function () use ($app) {
     };
 
     $app->session->either('user')
-//        ->filter(function ($user) use ($userDb) {
-//            return _404_APP_ADMIN_LEVEL == $userDb->getLevel($user);
-//        }, 'Wrong user level.')
+        ->map(function ($user) use ($app, $userDb) {
+            // Kinda uggly...
+            return $userDb->isAdmin($user)
+                ? $app->post->maybe('username')->withDefault($user)
+                : $user;
+        })
         ->resolve($onOkEdit, $notOk);
 });
-
-
 
 
 $app->router->add('handle/user/passwordchange', function () use ($app) {
@@ -112,9 +120,7 @@ $app->router->add('handle/user/passwordchange', function () use ($app) {
         $app->redirect("errorwithinfofromget?error=$errQuery");
     };
 
-    $loggedIn = $app->session->either('user');
-
-    $loggedIn
+    $app->session->either('user')
         ->filter($passwordMatch, 'New passwords did not match.')
         ->resolve($onOkSavePassword, $notOk);
 });

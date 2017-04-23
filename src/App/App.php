@@ -49,4 +49,15 @@ class App
             })
             ->withDefault($this->url->create(""));
     }
+
+    /**
+     * Previous route with query.
+     *
+     * @return string - previous route or homepage.
+     */
+    public function previousRouteWithQuery()
+    {
+        return $this->server->maybe('HTTP_REFERER')
+            ->withDefault($this->url->create(""));
+    }
 }

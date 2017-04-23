@@ -2,7 +2,7 @@ kmom03
 
 cimage funkar nog inte riktigt med php 7. Mer än hälften av bilderna i kalendern fungerar inte på min lokala maskin som kör php 7.1 men dom fungerar på studentserver. Jag får upp ett fel från cimage som säger att bildfilen är trasig när jag provar med php 7.1. Har inte haft tid att titta närmare på detta eller skapat något issue.
 
-Funderade på om det varit snyggare med ett user-objekt i session istället för bara användarens namn om hen är inloggad. Jag han dock inte utforska detta.
+Jag tror att det varit snyggare med ett user-objekt i session istället för bara användarens namn om hen är inloggad. Jag han dock inte utforska detta.
 
 Hack och billiga lösningar.
 

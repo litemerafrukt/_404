@@ -3,7 +3,7 @@
     <h4>Medelande: <?= $errorMsg ?></h4>
     <hr>
     <p>
-        <a href="<?= $app->url->create("") ?>">Tillbaka till förstasidan</a>
+        <a href="<?= $app->previousRouteWithQuery() ?>">Tillbaka</a>
     </p>
 </div>
 

@@ -10,5 +10,6 @@ return [
         'userProfile'    => $this->app->url->create('user/profile'),
         'changePassword' => $this->app->url->create('user/passwordchange'),
         'newUser'        => $this->app->url->create('user/register'),
+        'adminUsers'     => $this->app->url->create('admin/users'),
     ]
 ];
