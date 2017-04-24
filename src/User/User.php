@@ -50,16 +50,6 @@ class User
     }
 
     /**
-     * Get level
-     *
-     * @return int
-     */
-    public function level()
-    {
-        return $this->level;
-    }
-
-    /**
      * Is user admin?
      *
      * @return bool

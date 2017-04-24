@@ -18,12 +18,12 @@ $app->router->add('handle/login', function () use ($app) {
 
         $login = $app->post->either('user')
             ->map('trim')
-            ->filter($notEmpty, "Username Empty.")
-            ->filter([$userDb, 'exists'], "Username not found")
+            ->filter($notEmpty, "Inget användarnamn.")
+            ->filter([$userDb, 'exists'], "Användaren hittades inte.")
             ->filter(function ($username) use ($password, $userDb) {
                 $dbHash = $userDb->getHash($username);
                 return password_verify($password, $dbHash);
-            }, "Password mismatch");
+            }, "Felaktigt lösenord.");
 
 
         $login->resolve(

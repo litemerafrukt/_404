@@ -15,9 +15,7 @@ $app->router->add('handle/admin/deleteuser', function () use ($app) {
         ->filter(function ($formUsername) use ($app) {
             return ! ($formUsername == $app->user->name());
         }, 'Du kan inte radera dig själv.')
-        ->filter(function ($formUsername) use ($userDb) {
-            return $userDb->exists($formUsername);
-        }, 'Användaren hittades inte i databasen.')
+        ->filter([$userDb, 'exists'], 'Användaren hittades inte i databasen.')
         ->resolve($deleteUser, [$app, 'stdErr']);
 });
 
@@ -47,4 +45,3 @@ $app->router->add('handle/admin/passwordchange', function () use ($app) {
         ->filter($passwordMatch, 'Lösenorden matchar inte')
         ->resolve($passwordChange, [$app, 'stdErr']);
 });
-

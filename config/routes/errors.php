@@ -13,7 +13,7 @@ $app->router->add('errorwithinfofromget', function () use ($app) {
         $app->redirect("");
     };
 
-    $errorMsg = $app->get->either('error')
+    $app->get->either('error')
         ->map('htmlentities')
         ->resolve($onError, $noError);
 });

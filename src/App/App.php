@@ -64,7 +64,7 @@ class App
     /**
      * Standard error. Redirects with error info in query.
      *
-     * @param errorMsg string message
+     * @param string
      */
     public function stdErr($errorMsg)
     {
