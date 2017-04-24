@@ -10,6 +10,8 @@ define("ANAX_APP_PATH", _404_APP_PATH);
 
 // Some constants
 define("_404_APP_ADMIN_LEVEL", 1);
+define("_404_APP_USER_LEVEL", 2);
+define("_404_APP_GUEST_LEVEL", 3);
 
 // Includes
 require_once _404_INSTALL_PATH . "/config/error_reporting.php";
@@ -37,7 +39,7 @@ $app->cookie        = new _404\Globals\Cookie();
 // Components
 $app->navbar        = new _404\Components\Navbar\Navbar();
 $app->loginbutton   = new _404\Components\LoginButton\LoginButton();
-$app->reports       = new \_404\Components\Articles\Articles(_404_APP_PATH . "/content/reports");
+$app->reports       = new _404\Components\Articles\Articles(_404_APP_PATH . "/content/reports");
 
 
 // Url setup
@@ -60,9 +62,17 @@ $app->view->configure("view.php");
 // Session setup
 $app->session->start();
 
-// Loginbutton setup, uses session
+// User
+$app->user = $app->session->maybe('user')
+    ->filter(function ($user) {
+        return is_a($user, '_404\User\User');
+    })
+    ->withDefault(new _404\User\User('Gäst'));
+
+// Loginbutton setup, uses user
 $app->loginbutton->setApp($app);
 $app->loginbutton->configure("loginbutton.php");
+
 
 // Navbar setup, uses loginbutton
 $app->navbar->setApp($app);

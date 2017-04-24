@@ -78,7 +78,6 @@ class Users
         $statement->execute();
 
         $res = $statement->fetch(PDO::FETCH_ASSOC);
-
         return $res;
     }
 

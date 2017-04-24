@@ -14,12 +14,10 @@ $app->router->add('handle/login', function () use ($app) {
 
         $password = $app->post->maybe('password')
             ->map('trim')
-            ->filter('htmlentities')
             ->withDefault("");
 
         $login = $app->post->either('user')
             ->map('trim')
-            ->map('htmlentities')
             ->filter($notEmpty, "Username Empty.")
             ->filter([$userDb, 'exists'], "Username not found")
             ->filter(function ($username) use ($password, $userDb) {
@@ -29,8 +27,14 @@ $app->router->add('handle/login', function () use ($app) {
 
 
         $login->resolve(
-            function ($username) use ($app) {
-                $app->session->set('user', $username);
+            function ($username) use ($app, $userDb) {
+                $userDetails = $userDb->getDetails($username);
+                $user = new _404\User\User(
+                    $userDetails['username'],
+                    $userDetails['email'],
+                    $userDetails['userlevel']
+                );
+                $app->session->set('user', $user);
                 $app->redirectBack();
             },
             function ($error) use ($app) {
@@ -40,7 +44,7 @@ $app->router->add('handle/login', function () use ($app) {
         );
     };
 
-    $otherwise = function () use ($app) {
+    $onCancel = function () use ($app) {
         $app->redirectBack();
     };
 
@@ -48,13 +52,12 @@ $app->router->add('handle/login', function () use ($app) {
         ->filter(function ($button) {
             return $button == 'attempt';
         }, '')
-        ->resolve($onLoginAttempt, $otherwise);
+        ->resolve($onLoginAttempt, $onCancel);
 });
 
 $app->router->add('handle/logout', function () use ($app) {
     $onLogout = function () use ($app) {
-        $loggedIn =  $app->session->maybe('user');
-        if ($loggedIn->isJust()) {
+        if ($app->user->isUser()) {
             $app->session->destroy();
         }
         $app->redirect('');

@@ -1,5 +1,6 @@
 <div class="container big-horisontal-margins">
-    <h2>Något gick fel...</h2>
+    <h3>Något gick fel...</h3>
+    <br>
     <h4>Medelande: <?= $errorMsg ?></h4>
     <hr>
     <p>

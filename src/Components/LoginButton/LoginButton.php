@@ -18,30 +18,33 @@ class LoginButton implements AppInjectableInterface, ConfigureInterface, Compone
     use ConfigureTrait;
     use AppInjectableTrait;
     use ComponentRenderTrait;
-
-    public function user($default)
-    {
-        return $this->app->session->get('user', $default);
-    }
+//
+//    public function user($default)
+//    {
+//        return $this->app->session->get('user', $default);
+//    }
 
     public function __call($methodName, $data)
     {
 
         $this->validateViewMethod($methodName);
 
-        $userDb = new Users($this->app->dbconnection);
+//        $userDb = new Users($this->app->dbconnection);
 
-        list($userLoggedIn, $username, $isAdmin) = $this->app->session->either('user')
-            ->resolve(
-                function ($user) use ($userDb) {
-                    return [true, $user, _404_APP_ADMIN_LEVEL == $userDb->getLevel($user)];
-                },
-                function () {
-                    return [false, '', 100];
-                }
-            );
+//        list($userLoggedIn, $username, $isAdmin) = $this->app->session->either('user')
+//            ->resolve(
+//                function ($user) use ($userDb) {
+//                    return [true, $user, _404_APP_ADMIN_LEVEL == $userDb->getLevel($user)];
+//                },
+//                function () {
+//                    return [false, '', 100];
+//                }
+//            );
 
-        $showLogin  = $this->app->get->maybe('login')->withDefault(false);
+        $userLoggedIn = $this->app->user->isUser();
+        $username     = $this->app->user->name();
+        $isAdmin      = $this->app->user->isAdmin();
+        $showLogin    = $this->app->get->maybe('login')->withDefault(false);
 
         $viewData = array_merge(
             compact('showLogin', 'userLoggedIn', 'username', 'isAdmin'),

@@ -60,4 +60,15 @@ class App
         return $this->server->maybe('HTTP_REFERER')
             ->withDefault($this->url->create(""));
     }
+
+    /**
+     * Standard error. Redirects with error info in query.
+     *
+     * @param errorMsg string message
+     */
+    public function stdErr($errorMsg)
+    {
+        $errQuery = urlencode($errorMsg);
+        $this->redirect("errorwithinfofromget?error=$errQuery");
+    }
 }

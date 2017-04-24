@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2">Level: </label>
             <div class="col-sm-4">
-                <input type="number" min="1" max="3" name="userlevel" value="3" class="form-control" />
+                <input type="number" min="1" max="2" name="userlevel" value="2" class="form-control" />
             </div>
         </div>
         <hr>

@@ -1,6 +1,8 @@
 <div class="container big-horisontal-margins">
     <h2><?= $username ?> - profil</h2>
+
     <?php if ($edit) : ?>
+
         <form class="form-horizontal" method="post" action="<?= $app->url->create('handle/user/edit') ?>">
             <div class="form-group">
                 <label class="control-label col-sm-1">Email: </label>
@@ -11,7 +13,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-1">Level: </label>
                 <div class="col-sm-4">
-                    <input required type="number" min="1" max="3" name="userlevel" class="form-control" value="<?= $userlevel ?>" />
+                    <input required type="number" min="1" max="2" name="userlevel" class="form-control" value="<?= $userlevel ?>" />
                 </div>
             </div>
             <div class="form-group">
@@ -27,7 +29,9 @@
             <button class="btn btn-primary pull-right">Spara</button>
             <a href="<?= $app->previousRoute(); ?>" class="btn btn-warning pull-right right-margin-2rem">Avbryt</a>
         </form>
+
     <?php else : ?>
+
         <div class="row">
             <h5><span class="col-sm-2">Email: </span><span class="col-sm-10"><?= $email ?></span></h5>
         </div>
@@ -47,5 +51,7 @@
             <br>
             <a href="<?= $app->url->create('admin/users') ?>">Till admin</a>
         <?php endif ?>
+
     <?php endif ?>
+
 </div>

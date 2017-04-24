@@ -10,13 +10,11 @@ $app->router->add('user/register', function () use ($app) {
 });
 
 $app->router->add('user/profile', function () use ($app) {
-    $userDb = new _404\Database\Users($app->dbconnection);
-
     // Happy function
-    $showProfile = function ($user) use ($app) {
+    $showProfile = function ($username) use ($app) {
         $userDb = new _404\Database\Users($app->dbconnection);
 
-        $viewData = $userDb->getDetails($user);
+        $viewData = $userDb->getDetails($username);
 
         $viewData['edit'] = $app->get->maybe('edit')
             ->filter(function ($value) {
@@ -24,7 +22,7 @@ $app->router->add('user/profile', function () use ($app) {
             })
             ->withDefault(false);
 
-        $viewData['isAdmin'] = $userDb->isAdmin($app->session->maybe('user')->withDefault($user));
+        $viewData['isAdmin'] = $app->user->isAdmin();
 
         $app->view->add("layout", ["title" => "Användarprofil"], "layout");
         $app->view->add("user/profile", $viewData, "main");
@@ -33,20 +31,13 @@ $app->router->add('user/profile', function () use ($app) {
             ->send();
     };
 
-    // No user logged in function
-    $redirectOnNotLoggedIn = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?login=show&error=$errQuery");
-    };
-
     // Decide
-    $app->session->either('user')
-        ->map(function ($user) use ($app, $userDb) {
-            return $userDb->isAdmin($user)
-                ? $app->get->maybe('user')->withDefault($user)
-                : $user;
+    $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
+        ->map(function ($adminName) use ($app) {
+            return $app->get->maybe('user')->withDefault($adminName);
         })
-        ->resolve($showProfile, $redirectOnNotLoggedIn);
+        ->orElse($app->user->eitherUserNameOr('Du är inte inloggad'))
+        ->resolve($showProfile, [$app, 'stdErr']);
 });
 
 $app->router->add('user/passwordchange', function () use ($app) {
@@ -58,13 +49,8 @@ $app->router->add('user/passwordchange', function () use ($app) {
             ->send();
     };
 
-    $redirectOnNotLoggedIn = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?error=$errQuery");
-    };
-
-    $app->session->either('user')
-        ->resolve($showPasswordChange, $redirectOnNotLoggedIn);
+    $app->user->eitherUserNameOr('Du är inte inloggad')
+        ->resolve($showPasswordChange, [$app, 'stdErr']);
 });
 
 $app->router->add('user/passwordchangesuccess', function () use ($app) {
@@ -76,11 +62,6 @@ $app->router->add('user/passwordchangesuccess', function () use ($app) {
             ->send();
     };
 
-    $redirectOnNotLoggedIn = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?error=$errQuery");
-    };
-
-    $app->session->either('user')
-        ->resolve($showSuccess, $redirectOnNotLoggedIn);
+    $app->user->eitherUserOr('Du är inte inloggad.')
+        ->resolve($showSuccess, [$app, 'stdErr']);
 });

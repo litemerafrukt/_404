@@ -3,7 +3,7 @@
 $app->router->add('handle/user/register', function () use ($app) {
     $userDb = new _404\Database\Users($app->dbconnection);
 
-    $newUserMaybe   = $app->post->maybe('username')
+    $newUserMaybe = $app->post->maybe('username')
         ->map('trim')
         ->filter(function ($username) {
             return ! empty($username);
@@ -12,115 +12,102 @@ $app->router->add('handle/user/register', function () use ($app) {
             return ! $userDb->exists($username);
         });
 
-    $password1Maybe = $app->post->maybe('password-1');
-    $password2Maybe = $app->post->maybe('password-2');
-    $emailMaybe     = $app->post->maybe('email')
+    $emailMaybe = $app->post->maybe('email')
         ->map('trim')
         ->map('htmlentities');
-    $levelMaybe     = $app->post->maybe('userlevel')
+
+    $levelMaybe = $app->post->maybe('userlevel')
         ->map('trim')
-        ->map('htmlentities');
+        ->filter(function ($level) {
+            return in_array($level, [_404_APP_ADMIN_LEVEL, _404_APP_USER_LEVEL]);
+        });
+
     $cookieMaybe = $app->post->maybe('cookie');
 
-    $checkPasswords = function () use ($password1Maybe, $password2Maybe) {
-        return $password1Maybe->filter(function ($password) use ($password2Maybe) {
-            return $password === $password2Maybe->withDefault(false);
-        })->withDefault(false);
-    };
+    $otherPassword = $app->post->maybe('password-2')->map('trim');
+    $passwordMaybe = $app->post->maybe('password-1')
+        ->map('trim')
+        ->filter(function ($password1) use ($otherPassword) {
+            return $password1 === $otherPassword->withDefault(false);
+        });
 
-    $onOkSaveUser = function () use ($app, $userDb, $newUserMaybe, $password1Maybe, $emailMaybe, $levelMaybe, $cookieMaybe) {
+    $onOkSaveUser = function () use ($app, $userDb, $newUserMaybe, $passwordMaybe, $emailMaybe, $levelMaybe, $cookieMaybe) {
         $username = $newUserMaybe->withDefault('JohnDoe'); // This should be filtered beforehand
-        $password = password_hash($password1Maybe->withDefault(''), PASSWORD_DEFAULT);
+        $password = password_hash($passwordMaybe->withDefault(''), PASSWORD_DEFAULT);
         $email = $emailMaybe->withDefault('');
-        $level = $levelMaybe->withDefault(3);
+        $level = $levelMaybe->withDefault(2);
 
         $userDb->addUser($username, $password, $email, $level);
 
         // Login user if not logged in
-        $app->session->set(
-            'user',
-            $app->session->maybe('user')->withDefault($username)
-        );
+        if (! $app->user->isUser()) {
+            $app->session->set(
+                'user',
+                new \_404\User\User($username, $email, $level)
+            );
+        }
+
         // Set cookie
-        $cookie = $cookieMaybe->withDefault('');
+        $cookie = $cookieMaybe->withDefault('Detta är en kaka');
         $app->cookie->set($username, $cookie);
 
         $urlencodedUsername = urlencode($username);
         $app->redirect("user/profile?user=$urlencodedUsername");
     };
 
-    $notOk = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?error=$errQuery");
-    };
-
-    $eitherSave = $app->post->either('save');
-
-    $eitherSave
-        ->filter([$newUserMaybe, 'isJust'], 'Username taken.')
-        ->filter($checkPasswords, 'Passwords did not match.')
-        ->resolve($onOkSaveUser, $notOk);
+    $app->post->either('save')
+        ->filter([$newUserMaybe, 'isJust'], 'Användarnamnet upptaget.')
+        ->filter([$passwordMaybe, 'isJust'], 'Lösenorden matchar inte.')
+        ->resolve($onOkSaveUser, [$app, 'stdErr']);
 });
 
 
 
 
 $app->router->add('handle/user/edit', function () use ($app) {
-    $userDb = new _404\Database\Users($app->dbconnection);
+    $okEdit = function ($username) use ($app) {
+        $userDb = new _404\Database\Users($app->dbconnection);
 
-    $onOkEdit = function ($user) use ($app, $userDb) {
         $email = $app->post->maybe('email')->withDefault('');
-        $userlevel = $app->post->maybe('userlevel')->withDefault(3);
+        $userlevel = $app->post->maybe('userlevel')
+            ->filter(function ($level) {
+                return in_array($level, [_404_APP_ADMIN_LEVEL, _404_APP_USER_LEVEL]);
+            })->withDefault(2);
         $cookie = $app->post->maybe('cookie')->withDefault('Kakfel');
 
-        $userDb->setDetails($user, $email, $userlevel);
+        $userDb->setDetails($username, $email, $userlevel);
 
         // Set cookie
-        $app->cookie->set($user, $cookie);
-
-        $app->redirect("user/profile?user=$user");
+        $app->cookie->set($username, $cookie);
+        $app->redirect("user/profile?user=$username");
     };
 
-    $notOk = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?error=$errQuery");
-    };
-
-    $app->session->either('user')
-        ->map(function ($user) use ($app, $userDb) {
-            // Kinda uggly...
-            return $userDb->isAdmin($user)
-                ? $app->post->maybe('username')->withDefault($user)
-                : $user;
+    // Decide
+    $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
+        ->map(function ($adminName) use ($app) {
+            return $app->post->maybe('username')->withDefault($adminName);
         })
-        ->resolve($onOkEdit, $notOk);
+        ->orElse($app->user->eitherUserNameOr('Du är inte inloggad'))
+        ->resolve($okEdit, [$app, 'stdErr']);
 });
 
 
 $app->router->add('handle/user/passwordchange', function () use ($app) {
-    $userDb = new _404\Database\Users($app->dbconnection);
-
-    $newPasswordMaybe = $app->post->maybe('new-password-1')
-        ->filter(function ($newPassword1) use ($app) {
-            return $newPassword1 === $app->post->maybe('new-password-2')->withDefault(false);
-        });
-
-    $passwordMatch = function () use ($newPasswordMaybe) {
-        return $newPasswordMaybe->isJust();
-    };
-
-    $onOkSavePassword = function ($user) use ($app, $userDb, $newPasswordMaybe) {
-        $newPassword = password_hash($newPasswordMaybe->withDefault(''), PASSWORD_DEFAULT);
-        $userDb->changePassword($user, $newPassword);
+    $onOkSavePassword = function ($password) use ($app) {
+        $userDb = new _404\Database\Users($app->dbconnection);
+        $newPassword = password_hash($password, PASSWORD_DEFAULT);
+        $userDb->changePassword($app->user->name(), $newPassword);
         $app->redirect('user/passwordchangesuccess');
     };
 
-    $notOk = function ($error) use ($app) {
-        $errQuery = urlencode($error);
-        $app->redirect("errorwithinfofromget?error=$errQuery");
+    $password2Maybe = $app->post->maybe('new-password-2');
+
+    $passwordMatch = function ($password1) use ($password2Maybe) {
+        return $password1 === $password2Maybe->withDefault(false);
     };
 
-    $app->session->either('user')
-        ->filter($passwordMatch, 'New passwords did not match.')
-        ->resolve($onOkSavePassword, $notOk);
+    $app->post->either('new-password-1')
+        ->filter([$app->user->eitherUserOr(''), 'isRight'], 'Du är inte inloggad.')
+        ->filter($passwordMatch, 'Lösenorden matchar inte')
+        ->resolve($onOkSavePassword, [$app, 'stdErr']);
 });
