@@ -36,6 +36,31 @@ class App
     }
 
     /**
+     * Shortner for setRedirect.
+     * @param $route
+     * @return Response
+     */
+    public function setRedirect($route)
+    {
+        return $this->response->setRedirect($this->url->create($route));
+    }
+
+    /**
+     * Set header to go back to previous route
+     * @return Response
+     */
+    public function setRedirectBack()
+    {
+        $previousRoute = $this->server->maybe('HTTP_REFERER')
+            ->map(function ($referer) {
+                return explode("?", $referer)[0];
+            })
+            ->withDefault('');
+
+        return $this->setRedirect($previousRoute);
+    }
+
+    /**
      * Previous route without query.
      *
      * @return string - previous route or homepage. No query.
@@ -69,6 +94,6 @@ class App
     public function stdErr($errorMsg)
     {
         $errQuery = urlencode($errorMsg);
-        $this->redirect("errorwithinfofromget?error=$errQuery");
+        return $this->setRedirect("errorwithinfofromget?error=$errQuery");
     }
 }

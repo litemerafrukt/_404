@@ -26,7 +26,7 @@ $app->router->add('handle/login', function () use ($app) {
             }, "Felaktigt lösenord.");
 
 
-        $login->resolve(
+        return $login->resolve(
             function ($username) use ($app, $userDb) {
                 $userDetails = $userDb->getDetails($username);
                 $user = new _404\User\User(
@@ -35,20 +35,20 @@ $app->router->add('handle/login', function () use ($app) {
                     $userDetails['userlevel']
                 );
                 $app->session->set('user', $user);
-                $app->redirectBack();
+                return $app->setRedirectBack();
             },
             function ($error) use ($app) {
                 $errQuery = urlencode($error);
-                $app->redirect("errorwithinfofromget?login=show&error=$errQuery");
+                return $app->setRedirect("errorwithinfofromget?login=show&error=$errQuery");
             }
         );
     };
 
     $onCancel = function () use ($app) {
-        $app->redirectBack();
+        return $app->setRedirectBack();
     };
 
-    $app->post->either('login')
+    return $app->post->either('login')
         ->filter(function ($button) {
             return $button == 'attempt';
         }, '')
@@ -60,14 +60,14 @@ $app->router->add('handle/logout', function () use ($app) {
         if ($app->user->isUser()) {
             $app->session->destroy();
         }
-        $app->redirect('');
+        return $app->setRedirect('');
     };
 
     $onCancel = function () use ($app) {
-        $app->redirectBack();
+        return $app->redirectBack();
     };
 
-    $app->post->either('logout')
+    return $app->post->either('logout')
         ->filter(function ($button) {
             return $button == "logout";
         }, '')

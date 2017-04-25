@@ -5,8 +5,7 @@ $app->router->add('user/register', function () use ($app) {
     $app->view->add("layout", ["title" => "Ny användare"], "layout");
     $app->view->add("user/register", [], "main");
 
-    $app->response->setBody($app->view->renderBuffered("layout"))
-        ->send();
+    return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
 $app->router->add('user/profile', function () use ($app) {
@@ -27,17 +26,18 @@ $app->router->add('user/profile', function () use ($app) {
         $app->view->add("layout", ["title" => "Användarprofil"], "layout");
         $app->view->add("user/profile", $viewData, "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
     // Decide
-    $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
+    $response = $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
         ->map(function ($adminName) use ($app) {
             return $app->get->maybe('user')->withDefault($adminName);
         })
         ->orElse($app->user->eitherUserNameOr('Du är inte inloggad'))
         ->resolve($showProfile, [$app, 'stdErr']);
+
+    return $response;
 });
 
 $app->router->add('user/passwordchange', function () use ($app) {
@@ -45,12 +45,13 @@ $app->router->add('user/passwordchange', function () use ($app) {
         $app->view->add("layout", ["title" => "Ändra lösenord"], "layout");
         $app->view->add("user/passwordchange", ['username' => $username], "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
-    $app->user->eitherUserNameOr('Du är inte inloggad')
+    $response = $app->user->eitherUserNameOr('Du är inte inloggad')
         ->resolve($showPasswordChange, [$app, 'stdErr']);
+
+    return $response;
 });
 
 $app->router->add('user/passwordchangesuccess', function () use ($app) {
@@ -58,10 +59,11 @@ $app->router->add('user/passwordchangesuccess', function () use ($app) {
         $app->view->add("layout", ["title" => "Lösenordet ändrat"], "layout");
         $app->view->add("user/passwordchangesuccess", [], "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
-    $app->user->eitherUserOr('Du är inte inloggad.')
+    $response = $app->user->eitherUserOr('Du är inte inloggad.')
         ->resolve($showSuccess, [$app, 'stdErr']);
+
+    return $response;
 });

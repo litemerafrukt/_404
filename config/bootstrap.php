@@ -24,7 +24,7 @@ $app = new \_404\App\App();
 
 // Framework
 $app->request       = (new Anax\Request\Request())->init();
-$app->response      = new Anax\Response\Response();
+$app->response      = new _404\Response\Response();
 $app->url           = new _404\Url\Url();
 $app->router        = new Anax\Route\RouterInjectable();
 $app->view          = new Anax\View\ViewContainer();

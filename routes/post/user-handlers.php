@@ -52,10 +52,10 @@ $app->router->add('handle/user/register', function () use ($app) {
         $app->cookie->set($username, $cookie);
 
         $urlencodedUsername = urlencode($username);
-        $app->redirect("user/profile?user=$urlencodedUsername");
+        return $app->setRedirect("user/profile?user=$urlencodedUsername");
     };
 
-    $app->post->either('save')
+    return $app->post->either('save')
         ->filter([$newUserMaybe, 'isJust'], 'Användarnamnet upptaget.')
         ->filter([$passwordMaybe, 'isJust'], 'Lösenorden matchar inte.')
         ->resolve($onOkSaveUser, [$app, 'stdErr']);
@@ -79,11 +79,11 @@ $app->router->add('handle/user/edit', function () use ($app) {
 
         // Set cookie
         $app->cookie->set($username, $cookie);
-        $app->redirect("user/profile?user=$username");
+        return $app->setRedirect("user/profile?user=$username");
     };
 
     // Decide
-    $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
+    return $app->user->eitherAdminNameOr('Du behöver admin-behörighet')
         ->map(function ($adminName) use ($app) {
             return $app->post->maybe('username')->withDefault($adminName);
         })
@@ -97,7 +97,8 @@ $app->router->add('handle/user/passwordchange', function () use ($app) {
         $userDb = new _404\Database\Users($app->dbconnection);
         $newPassword = password_hash($password, PASSWORD_DEFAULT);
         $userDb->changePassword($app->user->name(), $newPassword);
-        $app->redirect('user/passwordchangesuccess');
+
+        return $app->setRedirect('user/passwordchangesuccess');
     };
 
     $password2Maybe = $app->post->maybe('new-password-2');
@@ -106,7 +107,7 @@ $app->router->add('handle/user/passwordchange', function () use ($app) {
         return $password1 === $password2Maybe->withDefault(false);
     };
 
-    $app->post->either('new-password-1')
+    return $app->post->either('new-password-1')
         ->filter([$app->user->eitherUserOr(''), 'isRight'], 'Du är inte inloggad.')
         ->filter($passwordMatch, 'Lösenorden matchar inte')
         ->resolve($onOkSavePassword, [$app, 'stdErr']);

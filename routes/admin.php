@@ -50,11 +50,10 @@ $app->router->add('admin/users', function () use ($app) {
         $app->view->add("layout", ["title" => "Administrera användare"], "layout");
         $app->view->add("admin/users", $viewData, "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
-    $app->user->eitherAdminOr('Du har inte adminstatus.')
+    return $app->user->eitherAdminOr('Du har inte adminstatus.')
         ->resolve($showUsers, [$app, 'stdErr']);
 });
 
@@ -63,17 +62,16 @@ $app->router->add('admin/passwordchange', function () use ($app) {
         $app->view->add("layout", ["title" => "Ändra lösenord"], "layout");
         $app->view->add("admin/passwordchange", ['username' => $username], "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
     $userMaybe = $app->get->maybe('user');
 
-    $app->user->eitherAdminOr('Du har inte adminstatus.')
+    return $app->user->eitherAdminOr('Du har inte adminstatus.')
         ->filter([$userMaybe, 'isJust'], 'Fel användarnamn.')
         ->resolve(function () use ($app, $userMaybe, $showPasswordChange) {
             $username = $userMaybe->withDefault($app->user->name());
-            $showPasswordChange($username);
+            return $showPasswordChange($username);
         }, [$app, 'stdErr']);
 });
 
@@ -82,10 +80,9 @@ $app->router->add('admin/passwordchangesuccess', function () use ($app) {
         $app->view->add("layout", ["title" => "Lösenordet ändrat"], "layout");
         $app->view->add("admin/passwordchangesuccess", [], "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
-    $app->user->eitherAdminOr('Du är inte admin.')
+    return $app->user->eitherAdminOr('Du är inte admin.')
         ->resolve($showSuccess, [$app, 'stdErr']);
 });

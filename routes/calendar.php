@@ -9,7 +9,7 @@ $app->router->add('calendar', function () use ($app) {
     $month = date("n");
 
     $url = $app->url->create("calendar/$year/$month");
-    $app->response->redirect($url);
+    return $app->response->setRedirect($url);
 });
 
 $app->router->add('calendar/{year:digit}/{month:digit}', function ($year, $month) use ($app) {
@@ -25,6 +25,5 @@ $app->router->add('calendar/{year:digit}/{month:digit}', function ($year, $month
     $app->view->add("layout", ["title" => "Kalender"], "layout");
     $app->view->add("calendar", ['calendar' => $calendarOutput], "main");
 
-    $app->response->setBody($app->view->renderBuffered("layout"))
-        ->send();
+    return $app->response->setBody($app->view->renderBuffered("layout"));
 });

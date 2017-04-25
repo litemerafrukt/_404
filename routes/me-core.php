@@ -8,24 +8,21 @@ $app->router->add("", function () use ($app) {
     $app->view->add("layout", ["title" => "Hem"], "layout");
     $app->view->add("index", [], "main");
 
-    $app->response->setBody($app->view->renderBuffered("layout"))
-        ->send();
+    return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
 $app->router->add("reports", function () use ($app) {
     $app->view->add("layout", ["title" => "Kursmomentsrapporter"], "layout");
     $app->view->add("reports", [], "main");
 
-    $app->response->setBody($app->view->renderBuffered("layout"))
-        ->send();
+    return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
 $app->router->add("about", function () use ($app) {
     $app->view->add("layout", ["title" => "Om"], "layout");
     $app->view->add("about", [], "main");
 
-    $app->response->setBody($app->view->renderBuffered("layout"))
-        ->send();
+    return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
 $app->router->add('api/sysinfo', function () use ($app) {
@@ -37,5 +34,5 @@ $app->router->add('api/sysinfo', function () use ($app) {
         "execution_time" => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
     ];
 
-    $app->response->sendJson($data);
+    return $app->response->setJson($data);
 });

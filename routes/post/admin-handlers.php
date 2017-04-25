@@ -6,11 +6,11 @@ $app->router->add('handle/admin/deleteuser', function () use ($app) {
     // Happy path
     $deleteUser = function ($userId) use ($app, $userDb) {
         $userDb->delete($userId);
-        $app->redirectBack();
+        return $app->setRedirectBack();
     };
 
     // Check admin and resolve
-    $app->get->either('user')
+    return $app->get->either('user')
         ->filter([$app->user->eitherAdminOr(''), 'isRight'], 'Du har inte adminstatus')
         ->filter(function ($formUsername) use ($app) {
             return ! ($formUsername == $app->user->name());
@@ -37,10 +37,10 @@ $app->router->add('handle/admin/passwordchange', function () use ($app) {
     $passwordChange = function ($formUsername) use ($app, $userDb, $newPasswordMaybe) {
         $newPassword = password_hash($newPasswordMaybe->withDefault(''), PASSWORD_DEFAULT);
         $userDb->changePassword($formUsername, $newPassword);
-        $app->redirect('admin/passwordchangesuccess');
+        return $app->setRedirect('admin/passwordchangesuccess');
     };
 
-    $app->post->either('username')
+    return $app->post->either('username')
         ->filter([$app->user->eitherAdminOr(''), 'isRight'], 'Du har inte adminstatus.')
         ->filter($passwordMatch, 'Lösenorden matchar inte')
         ->resolve($passwordChange, [$app, 'stdErr']);

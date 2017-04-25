@@ -5,15 +5,14 @@ $app->router->add('errorwithinfofromget', function () use ($app) {
         $app->view->add("layout", ["title" => "Error"], "layout");
         $app->view->add("showgeterror", compact('errorMsg'), "main");
 
-        $app->response->setBody($app->view->renderBuffered("layout"))
-            ->send();
+        return $app->response->setBody($app->view->renderBuffered("layout"));
     };
 
     $noError = function () use ($app) {
-        $app->redirect("");
+        return $app->setRedirect("");
     };
 
-    $app->get->either('error')
+    return $app->get->either('error')
         ->map('htmlentities')
         ->resolve($onError, $noError);
 });
