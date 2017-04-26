@@ -11,6 +11,17 @@ $app->router->add("", function () use ($app) {
     return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
+/* Would it be nice to be able to write as this? */
+/* $app->router->add("", function () use ($app) { */
+/*     $app->view->add("layout") */
+/*         ->data(["title" => "Hem"]) */
+/*         ->region("layout"); */
+
+/*     $app->view->add("index")->region("main"); */
+
+/*     return $app->response->setBody($app->view->layout->renderBuffered()); */
+/* }); */
+
 $app->router->add("reports", function () use ($app) {
     $app->view->add("layout", ["title" => "Kursmomentsrapporter"], "layout");
     $app->view->add("reports", [], "main");

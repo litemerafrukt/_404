@@ -165,7 +165,7 @@ class Users
     public function countWithFilter($filter)
     {
         $sql = "
-            SELECT COUNT(id) FROM oophp_users 
+            SELECT COUNT(id) FROM oophp_users
             WHERE email LIKE '$filter' OR username LIKE '$filter' OR userlevel LIKE '$filter'
         ";
 
@@ -187,7 +187,7 @@ class Users
     public function getUsers($filter, $orderBy, $order, $limit, $offset)
     {
         $sql = "
-            SELECT * FROM oophp_users 
+            SELECT * FROM oophp_users
             WHERE email LIKE '$filter' OR username LIKE '$filter' OR userlevel LIKE '$filter'
             ORDER BY $orderBy $order
             LIMIT $limit OFFSET $offset
