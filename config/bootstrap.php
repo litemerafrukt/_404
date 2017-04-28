@@ -77,3 +77,6 @@ $app->loginbutton->configure("loginbutton.php");
 // Navbar setup, uses loginbutton
 $app->navbar->setApp($app);
 $app->navbar->configure("navbar.php");
+
+// Toolz
+$tlz = new _404\Toolz\Toolz();

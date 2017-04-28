@@ -64,7 +64,7 @@ $app->router->add('handle/logout', function () use ($app) {
     };
 
     $onCancel = function () use ($app) {
-        return $app->redirectBack();
+        return $app->setRedirectBack();
     };
 
     return $app->post->either('logout')

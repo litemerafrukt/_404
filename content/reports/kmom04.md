@@ -21,3 +21,8 @@ Block delen av uppgiften var i stort sett odefinierad och jag förstod inte uppg
 En admin ska kunna gå in och CRUD:a block. I en template kan man skriva $app->blocks->exists("blocknamn") och $app->block->html("blocknamn") för att hämta blocket till den platsen.
 
 Jag valde att skapa tre tabeller i databasen då jag tyckte att det var tre distinkta typer av content med olika syften.
+
+Jag kom på att jag kan låsa alla admin-sidor väldigt enkelt genom en simpel if-sats istället för att göra en koll på varenda route som bara admin får ha tillgång till. Om användaren inte är admin laddas inte admin routarna. Varför tänkte jag inte på det innan?
+
+--- Stämmer inte längre
+Jag kom på att man kan "låsa" alla admin-routes genom att fånga alla requests till en viss route. Så istället för att kontrollera om användaren är admin i var route som kräver admin-behörighet har jag en funktion som gör en koll att användaren är admin. Sedan fångar jag alla anrop till `admin/{}` i sammanlagt tre undernivåer. Om man inte är inloggad som admin studsar man tillbaka till start-sidan. Eftersom routern kör alla routes som matchar använde jag internal routes och jag lade till i routern att returnera resultatet av ´handleInternal()´ eftersom det av någon anledning inte returnerades i orginal.

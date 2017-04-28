@@ -9,7 +9,7 @@ class Toolz
     public function partial($func, ...$args)
     {
         return function () use ($func, $args) {
-            return call_user_func_array($func, array_merge(func_get_args(), $args));
+            return call_user_func_array($func, array_merge($args, func_get_args()));
         };
     }
 
