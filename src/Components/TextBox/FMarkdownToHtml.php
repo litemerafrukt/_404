@@ -1,11 +1,13 @@
 <?php
 
-namespace _404\Components\TextWrangler;
+namespace _404\Components\TextBox;
+
+use Parsedown;
 
 /**
  * Class to parse from markdown
  */
-class FMarkdown implements ITextFilter
+class FMarkdownToHtml implements ITextFilter
 {
     /**
      * Parse input to html
@@ -13,7 +15,7 @@ class FMarkdown implements ITextFilter
      * @param string
      * @return string
      */
-    public function toHtml($text)
+    public function parse($text)
     {
         $parser = new Parsdown;
         return $parser->text($text);

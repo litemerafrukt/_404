@@ -72,6 +72,24 @@ class Nothing implements Maybe
     }
 
     /**
+     * Just get the value inside the Nothing. Since it is noting then null.
+     *
+     * This should not be your first-hand choice, use withDefault instead.
+     * Rational: Since this is PHP we do not have super support for
+     * functional programming. Sometimes you have done all checks
+     * allready and just need the vaule.
+     *
+     * TODO: Could be that the need for this method could be
+     * reduced with map2, map3 and so forth
+     *
+     * @return mixed
+     */
+    public function get()
+    {
+        return null;
+    }
+
+    /**
      * Get default value since Nothing holds nothing.
      *
      * @param $default

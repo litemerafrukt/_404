@@ -1,11 +1,12 @@
 <?php
 
+namespace _404\Components\TextBox;
+
 /**
  * Class TextBox
  *
  * Container for text to transform
  */
-
 class TextBox
 {
     private $text;
@@ -68,7 +69,7 @@ class TextBox
      */
     public function parseWith(ITextFilter $parser)
     {
-        $this->text = $parser->toHtml($this->text);
+        $this->text = $parser->parse($this->text);
         return $this;
     }
 

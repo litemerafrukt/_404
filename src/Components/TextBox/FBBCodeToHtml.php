@@ -1,11 +1,11 @@
 <?php
 
-namespace _404\TextWrangler;
+namespace _404\Components\TextBox;
 
 /**
  * Class to parse BBCode encoded text.
  */
-class FBBCode implements ITextFilter
+class FBBCodeToHtml implements ITextFilter
 {
     /**
      * Parse bbcode to html.
@@ -13,7 +13,7 @@ class FBBCode implements ITextFilter
      * @param string
      * @return string
      */
-    public function toHtml($text)
+    public function parse($text)
     {
         // From https://dbwebb.se/forum/viewtopic.php?t=288
         $search = array(

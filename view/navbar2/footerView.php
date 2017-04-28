@@ -6,6 +6,3 @@
         </li>
     <?php endforeach; ?>
 </ul>
-
-<?php
-

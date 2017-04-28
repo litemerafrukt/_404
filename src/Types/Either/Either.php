@@ -17,6 +17,7 @@ interface Either
     public function map($func);
     public function orElse(Either $either);
     public function filter($filterFunc, $error);
+    public function get();
     public function withDefault($default);
     public function resolve($rightFunc, $leftFunc);
 }

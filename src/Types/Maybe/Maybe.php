@@ -17,5 +17,6 @@ interface Maybe
     public function map($func);
     public function orElse(Maybe $maybe);
     public function filter($filterFunc);
+    public function get();
     public function withDefault($default);
 }

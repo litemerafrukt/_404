@@ -74,6 +74,25 @@ class Right implements Either
         return $filterFunc($this->value) ? $this : new Left($error);
     }
 
+
+    /**
+     * Just get the value inside the Either.
+     *
+     * This should not be your first-hand choice, use withDefault instead.
+     * Rational: Since this is PHP we do not have super support for
+     * functional programming. Sometimes you have done all checks
+     * allready and just need the vaule.
+     *
+     * TODO: Could be that the need for this method could be
+     * reduced with map2, map3 and so forth
+     *
+     * @return mixed
+     */
+    public function get()
+    {
+        return $this->value;
+    }
+
     /**
      * Returns the value in Right.
      *

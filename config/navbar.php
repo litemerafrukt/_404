@@ -18,6 +18,14 @@ return [
             "text"  => "Rapporter",
             "route" => $this->app->url->create("reports"),
         ],
+        "blog" => [
+            "text"  => "Blog",
+            "route" => $this->app->url->create("blog"),
+        ],
+        "pages" => [
+            "text"  => "Sidor",
+            "route" => $this->app->url->create("pages"),
+        ],
         "calendar" => [
             "text"  => "Kalender",
             "route" => $this->app->url->create("calendar"),
