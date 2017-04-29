@@ -9,7 +9,7 @@ return [
         'logoutHandler'  => $this->app->url->create('handle/logout'),
         'userProfile'    => $this->app->url->create('user/profile'),
         'changePassword' => $this->app->url->create('user/passwordchange'),
-        'newUser'        => $this->app->url->create('user/register'),
+        'newUser'        => $this->app->url->create('register/user'),
         'adminUsers'     => $this->app->url->create('admin/users'),
     ]
 ];

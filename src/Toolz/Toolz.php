@@ -2,6 +2,7 @@
 
 namespace _404\Toolz;
 
+use _404\Types\Either\Left;
 use _404\Types\Either\Right;
 
 class Toolz
@@ -31,5 +32,12 @@ class Toolz
         $combinedEither = array_reduce($arrOfEither, $combine, new Right([]));
 
         return $combinedEither;
+    }
+
+    public function eitherEmpty($value, $errorMsg)
+    {
+        return empty($value)
+            ? new Left($errorMsg)
+            : new Right($value);
     }
 }

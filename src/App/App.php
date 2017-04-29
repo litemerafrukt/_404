@@ -90,6 +90,7 @@ class App
      * Standard error. Redirects with error info in query.
      *
      * @param string
+     * @return Response
      */
     public function stdErr($errorMsg)
     {
@@ -97,3 +98,4 @@ class App
         return $this->setRedirect("errorwithinfofromget?error=$errQuery");
     }
 }
+

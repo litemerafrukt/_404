@@ -12,6 +12,10 @@ define("_404_APP_PATH", _404_INSTALL_PATH);
 require_once _404_INSTALL_PATH . '/config/bootstrap.php';
 
 // Routing
+// Guards
+require_once _404_INSTALL_PATH . '/routes/guards/admin.php';
+require_once _404_INSTALL_PATH . '/routes/guards/user.php';
+
 // Public routes
 require_once _404_INSTALL_PATH . '/routes/me-core.php';
 require_once _404_INSTALL_PATH . '/routes/calendar.php';

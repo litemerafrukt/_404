@@ -18,28 +18,11 @@ class LoginButton implements AppInjectableInterface, ConfigureInterface, Compone
     use ConfigureTrait;
     use AppInjectableTrait;
     use ComponentRenderTrait;
-//
-//    public function user($default)
-//    {
-//        return $this->app->session->get('user', $default);
-//    }
 
     public function __call($methodName, $data)
     {
 
         $this->validateViewMethod($methodName);
-
-//        $userDb = new Users($this->app->dbconnection);
-
-//        list($userLoggedIn, $username, $isAdmin) = $this->app->session->either('user')
-//            ->resolve(
-//                function ($user) use ($userDb) {
-//                    return [true, $user, _404_APP_ADMIN_LEVEL == $userDb->getLevel($user)];
-//                },
-//                function () {
-//                    return [false, '', 100];
-//                }
-//            );
 
         $userLoggedIn = $this->app->user->isUser();
         $username     = $this->app->user->name();

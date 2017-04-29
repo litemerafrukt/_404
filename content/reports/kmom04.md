@@ -16,12 +16,18 @@ Så jag bestämde mig för att skriva lite nytt i respons-klassen och göra om m
 
 Min nya respons-klass ska vara helt bakåtkompatibel med canax respons-klass men den är inte helt färdig och inte enhetstestad så det får vänta lite med eventuell pull request.
 
+Om man använder en ** route som guard för nått och sidan inte finns får man ingenting.
+
 Block delen av uppgiften var i stort sett odefinierad och jag förstod inte uppgiftsskaparens tanke riktigt. Min definition blev:
 
 En admin ska kunna gå in och CRUD:a block. I en template kan man skriva $app->blocks->exists("blocknamn") och $app->block->html("blocknamn") för att hämta blocket till den platsen.
 
 Jag valde att skapa tre tabeller i databasen då jag tyckte att det var tre distinkta typer av content med olika syften.
 
+-- Stämmer inte
+Äntligen insåg jag att jag kan låsa alla admin router genom att göra en handler i toppen på route-filen som inte returnerar utan som kör en redirect till error-sida om användaren inte har behörighet. Denna handler körs först som en guard på alla routes som kan leda till en admin-sida. En annan variant skulle vara att helt enkelt inte ladda routsen genom att lägga dem inom en if-sats. Om man inte har behörighet laddas inte routsen. Smaksak vad som är bäst kanske?
+
+--- Stämmer inte
 Jag kom på att jag kan låsa alla admin-sidor väldigt enkelt genom en simpel if-sats istället för att göra en koll på varenda route som bara admin får ha tillgång till. Om användaren inte är admin laddas inte admin routarna. Varför tänkte jag inte på det innan?
 
 --- Stämmer inte längre

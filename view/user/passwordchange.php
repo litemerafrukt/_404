@@ -1,5 +1,5 @@
 <div class="container big-horisontal-margins">
-    <form class="form-horizontal" method="post" action="<?= $app->url->create('handle/user/passwordchange') ?>">
+    <form class="form-horizontal" method="post" action="<?= $app->url->create('user/handle/passwordchange') ?>">
         <h2><?= $username ?> - ändra lösenord</h2>
         <div class="form-group">
             <label class="control-label col-sm-2">Nytt lösenord: </label>

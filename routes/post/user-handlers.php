@@ -64,7 +64,7 @@ $app->router->add('handle/user/register', function () use ($app) {
 
 
 
-$app->router->add('handle/user/edit', function () use ($app) {
+$app->router->add('user/handle/edit', function () use ($app) {
     $okEdit = function ($username) use ($app) {
         $userDb = new _404\Database\Users($app->dbconnection);
 
@@ -92,7 +92,7 @@ $app->router->add('handle/user/edit', function () use ($app) {
 });
 
 
-$app->router->add('handle/user/passwordchange', function () use ($app) {
+$app->router->add('user/handle/passwordchange', function () use ($app) {
     $onOkSavePassword = function ($password) use ($app) {
         $userDb = new _404\Database\Users($app->dbconnection);
         $newPassword = password_hash($password, PASSWORD_DEFAULT);

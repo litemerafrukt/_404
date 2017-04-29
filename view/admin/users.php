@@ -93,8 +93,8 @@ $adminUserRoute = $app->url->create("admin/users?")
                 <td><?= $user->email ?></td>
                 <td><?= $user->userlevel ?></td>
                 <td><a href="<?= $app->url->create("user/profile?edit=true&user=$user->username"); ?>">Redigera</a></td>
-                <td><a href="<?= $app->url->create("admin/passwordchange?user=$user->username"); ?>">Ändra lösenord</a></td>
-                <td><a href="<?= $app->url->create("handle/admin/deleteuser?user=$user->username") ?>">Ta bort</a></td>
+                <td><a href="<?= $app->url->create("admin/passwordchange/{$user->username}"); ?>">Ändra lösenord</a></td>
+                <td><a href="<?= $app->url->create("admin/handle/deleteuser/$user->username") ?>">Ta bort</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

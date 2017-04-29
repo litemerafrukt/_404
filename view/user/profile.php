@@ -3,7 +3,7 @@
 
     <?php if ($edit) : ?>
 
-        <form class="form-horizontal" method="post" action="<?= $app->url->create('handle/user/edit') ?>">
+        <form class="form-horizontal" method="post" action="<?= $app->url->create('user/handle/edit') ?>">
             <div class="form-group">
                 <label class="control-label col-sm-1">Email: </label>
                 <div class="col-sm-4">

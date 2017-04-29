@@ -1,7 +1,7 @@
 <?php
 
 
-$app->router->add('user/register', function () use ($app) {
+$app->router->add('register/user', function () use ($app) {
     $app->view->add("layout", ["title" => "Ny användare"], "layout");
     $app->view->add("user/register", [], "main");
 

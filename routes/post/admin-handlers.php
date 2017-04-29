@@ -1,26 +1,25 @@
 <?php
 
-$app->router->add('handle/admin/deleteuser', function () use ($app) {
+$app->router->add('admin/handle/deleteuser/{username}', function ($username) use ($app, $tlz) {
     $userDb = new _404\Database\Users($app->dbconnection);
 
     // Happy path
-    $deleteUser = function ($userId) use ($app, $userDb) {
-        $userDb->delete($userId);
+    $deleteUser = function ($username) use ($app, $userDb) {
+        $userDb->delete($username);
         return $app->setRedirectBack();
     };
 
     // Check admin and resolve
-    return $app->get->either('user')
-        ->filter([$app->user->eitherAdminOr(''), 'isRight'], 'Du har inte adminstatus')
-        ->filter(function ($formUsername) use ($app) {
-            return ! ($formUsername == $app->user->name());
+    return $tlz->eitherEmpty($username, 'Tomt användarnamn.')
+        ->filter(function ($username) use ($app) {
+            return ! ($username == $app->user->name());
         }, 'Du kan inte radera dig själv.')
         ->filter([$userDb, 'exists'], 'Användaren hittades inte i databasen.')
         ->resolve($deleteUser, [$app, 'stdErr']);
 });
 
 
-$app->router->add('handle/admin/passwordchange', function () use ($app) {
+$app->router->add('admin/handle/passwordchange', function () use ($app) {
     $userDb = new _404\Database\Users($app->dbconnection);
 
     $newPasswordMaybe = $app->post->maybe('new-password-1')
@@ -41,7 +40,7 @@ $app->router->add('handle/admin/passwordchange', function () use ($app) {
     };
 
     return $app->post->either('username')
-        ->filter([$app->user->eitherAdminOr(''), 'isRight'], 'Du har inte adminstatus.')
+        ->filter([$userDb, 'exists'], 'Användaren hittades inte i databasen.')
         ->filter($passwordMatch, 'Lösenorden matchar inte')
         ->resolve($passwordChange, [$app, 'stdErr']);
 });
