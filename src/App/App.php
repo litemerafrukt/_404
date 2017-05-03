@@ -98,4 +98,3 @@ class App
         return $this->setRedirect("errorwithinfofromget?error=$errQuery");
     }
 }
-

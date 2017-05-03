@@ -89,15 +89,7 @@ class Toolz
      */
     public function filterText($text, $filters)
     {
-        $textFilter = new TextFilter([
-            'esc' => new Fhtmlentities(),
-            'nl2br' => new Fnl2br(),
-            'link' => new FClickableLinks(),
-            'markdown' => new FMarkdownToHtml(),
-            'bbcode' => new FBBCodeToHtml(),
-        ]);
-
-        return $textFilter->filter($text, $filters)->text();
+        return $this->filterTextBox($text, $filters)->text();
     }
 
     /**

@@ -16,4 +16,3 @@ $app->router->add('errorwithinfofromget', function () use ($app) {
         ->map('htmlentities')
         ->resolve($onError, $noError);
 });
-

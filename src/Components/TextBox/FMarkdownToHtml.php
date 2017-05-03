@@ -17,8 +17,6 @@ class FMarkdownToHtml implements ITextFilter
      */
     public function parse($text)
     {
-        // $parser = new Parsedown();
-        // return $parser->text($text);
         return (new Markdown)->defaultTransform($text);
     }
 }
