@@ -162,3 +162,7 @@ Helpers
     margin-top: 100px;
     margin-bottom: 100px;
 }
+
+.content-deleted {
+    opacity: 0.5;
+}

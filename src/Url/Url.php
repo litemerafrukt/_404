@@ -286,12 +286,12 @@ class Url implements \Anax\Common\ConfigureInterface
      *
      * @return self
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function setUrlType($type)
     {
         if (!in_array($type, [self::URL_APPEND, self::URL_CLEAN])) {
-            throw new Exception("Unsupported Url type.");
+            throw new \Exception("Unsupported Url type.");
         }
 
         $this->urlType = $type;

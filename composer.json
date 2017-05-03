@@ -11,14 +11,17 @@
     "require": {
         "anax/request": "^1.0",
         "anax/router": "^1.0",
-        "anax/response": "^1.0",
         "anax/view": "^1.0",
         "mos/cimage": "^0.7.19",
-        "erusev/parsedown": "^1.6"
+        "erusev/parsedown": "^1.6",
+        "michelf/php-markdown": "^1.7"
     },
     "autoload": {
         "psr-4": {
             "_404\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.6.4"
     }
 }

@@ -14,7 +14,7 @@ class TextBox
     /**
      * Thou constructor
      *
-     * @param string
+     * @param string $text
      */
     public function __construct($text)
     {
@@ -64,7 +64,7 @@ class TextBox
     /**
      * Run parser on text. Parser must implement ITextFilter.
      *
-     * @param ITextFilter
+     * @param ITextFilter $parser
      * @return self
      */
     public function parseWith(ITextFilter $parser)

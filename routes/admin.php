@@ -1,5 +1,9 @@
 <?php
 
+/************************************************
+* Admin users
+************************************************/
+
 $app->router->add('admin/users', function () use ($app) {
     $userDb = new _404\Database\Users($app->dbconnection);
 
@@ -62,4 +66,44 @@ $app->router->add('admin/passwordchangesuccess', function () use ($app) {
     $app->view->add("admin/passwordchangesuccess", [], "main");
 
     return $app->response->setBody($app->view->renderBuffered("layout"));
+});
+
+/************************************************
+* Admin content
+************************************************/
+$app->router->add('admin/content/new', function () use ($app) {
+    $app->view->add("layout", ["title" => "Nytt innehåll"], "layout");
+    $app->view->add("admin/newcontent", [], "main");
+
+    return $app->response->setBody($app->view->renderBuffered("layout"));
+});
+
+$app->router->add('admin/content', function () use ($app) {
+    $contentDb = new _404\Database\Content($app->dbconnection);
+
+    $contents = $contentDb->all();
+
+    $app->view->add("layout", ["title" => "Administrera innehåll"], "layout");
+    $app->view->add("admin/content", compact('contents'), "main");
+
+    return $app->response->setBody($app->view->renderBuffered("layout"));
+});
+
+$app->router->add('admin/content/edit/{id}', function ($id) use ($app, $tlz) {
+    $contentDb = new _404\Database\Content($app->dbconnection);
+
+    $eitherContent = $tlz->eitherEmpty(
+        $contentDb->fetch($id),
+        "Inget innehåll med id: $id"
+    );
+
+    return $eitherContent->resolve(
+        function ($content) use ($app) {
+            $app->view->add("layout", ["title" => "$content->title"], "layout");
+            $app->view->add("admin/editcontent", compact('content'), "main");
+
+            return $app->response->setBody($app->view->renderBuffered("layout"));
+        },
+        [$app, 'stdErr']
+    );
 });

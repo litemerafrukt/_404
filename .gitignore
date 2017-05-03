@@ -4,3 +4,4 @@
 /vendor
 .DS_Store
 /config/database.php
+tags

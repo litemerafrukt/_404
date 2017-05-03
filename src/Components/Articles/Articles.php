@@ -21,7 +21,7 @@ class Articles
     public function allArticles()
     {
         return array_map(function ($filename) {
-            return new Article($this->dir, $filename);
+            return new Article("$this->dir/$filename");
         }, $this->articleFiles);
     }
 

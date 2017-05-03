@@ -24,6 +24,8 @@ require_once _404_INSTALL_PATH . '/routes/user.php';
 require_once _404_INSTALL_PATH . '/routes/admin.php';
 require_once _404_INSTALL_PATH . '/routes/errors.php';
 
+require_once _404_INSTALL_PATH . '/routes/content.php';
+
 require_once _404_INSTALL_PATH . '/routes/post/admin-handlers.php';
 require_once _404_INSTALL_PATH . '/routes/post/login-handlers.php';
 require_once _404_INSTALL_PATH . '/routes/post/user-handlers.php';

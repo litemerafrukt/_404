@@ -40,6 +40,7 @@ $app->cookie        = new _404\Globals\Cookie();
 $app->navbar        = new _404\Components\Navbar\Navbar();
 $app->loginbutton   = new _404\Components\LoginButton\LoginButton();
 $app->reports       = new _404\Components\Articles\Articles(_404_APP_PATH . "/content/reports");
+$app->blocks        = new _404\Components\Blocks\Blocks();
 
 
 // Url setup
@@ -80,3 +81,7 @@ $app->navbar->configure("navbar.php");
 
 // Toolz
 $tlz = new _404\Toolz\Toolz();
+
+// Blocks
+$app->blocks->setApp($app)
+    ->setTlz($tlz);

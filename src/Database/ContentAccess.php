@@ -1,0 +1,20 @@
+<?php
+
+namespace _404\Database;
+
+class ContentAccess
+{
+    use ContentAccessTrait;
+
+    private $db;
+
+    /**
+     * Thou Constructor
+     *
+     * @param $dbConnection DatabaseConnection
+     */
+    public function __construct(DatabaseConnection $dbConnection)
+    {
+        $this->db = $dbConnection->getPDO();
+    }
+}

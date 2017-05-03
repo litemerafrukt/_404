@@ -2,7 +2,7 @@
 
 namespace _404\Components\TextBox;
 
-use Parsedown;
+use Michelf\Markdown;
 
 /**
  * Class to parse from markdown
@@ -17,7 +17,8 @@ class FMarkdownToHtml implements ITextFilter
      */
     public function parse($text)
     {
-        $parser = new Parsdown;
-        return $parser->text($text);
+        // $parser = new Parsedown();
+        // return $parser->text($text);
+        return (new Markdown)->defaultTransform($text);
     }
 }

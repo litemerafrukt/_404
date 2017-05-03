@@ -14,7 +14,8 @@
         <form class="navbar-text navbar-right" method="post" action="<?= $logoutHandler ?>">
             <span class="right-divider">Inloggad som: <?= $username ?></span>
             <?php if ($isAdmin) : ?>
-                <a href="<?= $adminUsers ?>" class="right-divider">Admin</a>
+                <a href="<?= $adminUsers ?>" class="right-divider">Användare</a>
+                <a href="<?= $adminContent ?>" class="right-divider">Innehåll</a>
             <?php endif ?>
             <a href="<?= $changePassword ?>" class="right-divider">Ändra lösenord</a>
             <a href="<?= $userProfile ?>" class="right-divider">Profil</a>

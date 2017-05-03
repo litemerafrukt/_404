@@ -24,12 +24,13 @@ class Response
      * @param string $header type of header to set
      *
      * @return self
+     * @throws \Exception
      */
     public function setStatusCode($value)
     {
         $supportedValues = [200, 403, 404, 500];
         if (!in_array($value, $supportedValues)) {
-            throw new Exception("Unsupported statuscode: $value");
+            throw new \Exception("Unsupported statuscode: $value");
         }
         $this->statusCode = $value;
 
@@ -59,12 +60,12 @@ class Response
      *
      * @return void
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function checkIfHeadersAlreadySent()
     {
         if (headers_sent($file, $line)) {
-            throw new Exception("Try to send headers but headers already sent, output started at $file line $line.");
+            throw new \Exception("Try to send headers but headers already sent, output started at $file line $line.");
         }
     }
 
@@ -139,7 +140,7 @@ class Response
     /**
      * Get the body.
      *
-     * @return void
+     * @return string
      */
     public function getBody()
     {

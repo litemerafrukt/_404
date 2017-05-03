@@ -107,7 +107,7 @@ class Users
         $statement->execute();
     }
 
-    /**
+    /*
      * Check if user exists in the database
      *
      * @param $user string The user to search for

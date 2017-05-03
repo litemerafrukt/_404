@@ -59,17 +59,9 @@
                 <div class="col-lg-12">
                         <?= $app->navbar->footerMenu(); ?>
                     <hr>
-                    <div class="copyright text-muted small">
-                        <p>
-                            Kontakt: <a href="mailto:litemerafrukt@gmail.com">litemerafrukt@gmail.com</a>
-                        </p>
-                        <p>
-                            <a href="http://litemerafrukt.se">litemerafrukt.se</a>
-                        </p>
-                        <p>
-                            Copyright &copy; Anders Nygren.
-                        </p>
-                    </div>
+                    <?php if ($app->blocks->has('contact')) : ?>
+                        <?= $app->blocks->get('contact'); ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
