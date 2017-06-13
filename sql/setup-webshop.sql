@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS anng15;
 USE anng15;
 
-GRANT ALL ON anng15.* TO whoever@localhost IDENTIFIED BY 'whatever';
+-- GRANT ALL ON anng15.* TO whoever@localhost IDENTIFIED BY 'whatever';
 
 SET NAMES utf8;
 
@@ -73,7 +73,7 @@ CREATE TABLE `oophp_inventory` (
 CREATE TABLE `oophp_lowInventory` (
     `id` INT AUTO_INCREMENT,
     `prod_id` INT,
-    `time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`prod_id`) REFERENCES `oophp_products` (`id`)
@@ -101,7 +101,7 @@ CREATE TABLE `oophp_orders` (
 	`id` INT AUTO_INCREMENT,
     `shopper_id` INT,
     `shopper_name` VARCHAR(50),
-	`created` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	`created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`shopper_id`) REFERENCES `oophp_shoppers` (`id`)
