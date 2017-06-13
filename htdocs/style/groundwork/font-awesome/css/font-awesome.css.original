@@ -4,6 +4,9 @@
  */
 /* FONT PATH
  * -------------------------- */
+
+/* This is lib-stuff, supress css-lint */
+/* csslint ignore:start */
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.2.0');
@@ -1670,3 +1673,5 @@
 .fa-meanpath:before {
   content: "\f20c";
 }
+
+/* csslint ignore:end */
