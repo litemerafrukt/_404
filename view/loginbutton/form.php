@@ -16,6 +16,7 @@
             <?php if ($isAdmin) : ?>
                 <a href="<?= $adminUsers ?>" class="right-divider">Användare</a>
                 <a href="<?= $adminContent ?>" class="right-divider">Innehåll</a>
+                <a href="<?= $adminWebshop ?>" class="right-divider">Lager</a>
             <?php endif ?>
             <a href="<?= $changePassword ?>" class="right-divider">Ändra lösenord</a>
             <a href="<?= $userProfile ?>" class="right-divider">Profil</a>

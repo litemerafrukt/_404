@@ -23,6 +23,8 @@ DROP VIEW IF EXISTS oophp_VBasketDetails;
 DROP VIEW IF EXISTS oophp_VOrderDetails;
 DROP VIEW IF EXISTS oophp_VLowInventory;
 
+DROP VIEW IF EXISTS oophp_VAdminInventory;
+
 DELIMITER //
 
 -- Sum up rows of same product for a shopperId/single basket
@@ -31,7 +33,7 @@ DROP FUNCTION IF EXISTS sumBasketProd;
 CREATE FUNCTION sumBasketProd(shopperId INT, prodId INT)
 RETURNS INT
 BEGIN
-    RETURN (SELECT SUM(amount) FROM InBaskets WHERE shopper_id = shopperId AND prod_id = prodId);
+    RETURN (SELECT SUM(amount) FROM oophp_inBaskest WHERE shopper_id = shopperId AND prod_id = prodId);
 END
 //
 
@@ -124,11 +126,11 @@ INSERT INTO `oophp_prodCategories` (`description`) VALUES
 ;
 
 INSERT INTO `oophp_products` (`description`, `category`, `image_path`, `price`) VALUES
-("tulpan",   1, "image/tulip.jpg", 5),
-("ros",      1, "image/rose.jpg", 10),
-("lilja",    1, "image/lilly.jpg", 10),
-("pelargon", 2, "image/geranium.jpg", 25),
-("rosmarin", 2, "image/rosematy.jpg", 50)
+("tulpan",   1, "image/webshop/tulip.jpg", 5),
+("ros",      1, "image/webshop/rose.jpg", 10),
+("lilja",    1, "image/webshop/lilly.jpg", 10),
+("pelargon", 2, "image/webshop/geranium.jpg", 25),
+("rosmarin", 2, "image/webshop/rosemary.jpg", 50)
 ;
 
 INSERT INTO `oophp_inventory` (`prod_id`, `items`) VALUES
@@ -177,13 +179,32 @@ CREATE VIEW oophp_VVirtualInventory AS
 CREATE VIEW oophp_VVirtualInventoryDescription AS
     SELECT
         VI.prod_id AS id,
-        P.description as description,
-        VI.available as available
+        P.description AS description,
+        VI.available AS available
     FROM oophp_VVirtualInventory AS VI
         INNER JOIN oophp_products AS P
             ON P.id = VI.prod_id;
 
-
+--
+-- Admin Inventory View for me-page backend
+--
+CREATE VIEW oophp_VAdminInventory AS
+    SELECT
+        P.id AS id,
+        P.description AS description,
+        P.image_path AS image_path,
+        P.price AS price,
+        P.category AS category_id,
+        PC.description AS category_description,
+        I.items AS inventory,
+        VI.available AS virtual_inventory
+    FROM oophp_products AS P
+        INNER JOIN oophp_prodCategories AS PC
+            ON P.category = PC.id
+        INNER JOIN oophp_inventory AS I
+            ON P.id = I.prod_id
+        INNER JOIN oophp_VVirtualInventory AS VI
+            ON P.id = VI.prod_id;
 
 --
 -- Basket views
@@ -399,25 +420,7 @@ DELIMITER ;
 --
 
 --
--- Output stuff!
+-- Output some stuff
 --
--- select "";
--- select * from `oophp_products`;
---
--- select "";
--- select * from `oophp_inventory`;
---
--- select "";
--- select * from oophp_shoppers;
---
--- select "";
--- select * from oophp_inBaskest;
---
--- select "";
--- select * from oophp_VAvailable;
---
--- select "";
--- select * from oophp_VVirtualInventory;
---
--- select "";
--- select * from oophp_VVirtualInventoryDescription;
+select "";
+select * from `oophp_VAdminInventory`;

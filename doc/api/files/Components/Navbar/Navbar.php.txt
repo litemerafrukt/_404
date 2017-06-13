@@ -1,0 +1,52 @@
+<?php
+
+namespace _404\Components\Navbar;
+
+use Anax\Common\AppInjectableInterface;
+use Anax\Common\AppInjectableTrait;
+use Anax\Common\ConfigureInterface;
+use Anax\Common\ConfigureTrait;
+use _404\Component\ComponentRenderInterface;
+use _404\Component\ComponentRenderTrait;
+
+class Navbar implements AppInjectableInterface, ConfigureInterface, ComponentRenderInterface
+{
+    use ConfigureTrait;
+    use AppInjectableTrait;
+    use ComponentRenderTrait;
+
+    /**
+     * Get fully qualified route from config.
+     *
+     * @param string $item name of route in config
+     * @return string route
+     */
+    public function getRoute($item)
+    {
+        return $this->app->url->create(
+            $this->config['items'][$item]['route']
+        );
+    }
+
+    /**
+     * Make views from config callable. PHP magic method.
+     *
+     * @param $methodName
+     * @param array $data
+     * @return string
+     */
+    public function __call($methodName, $data = [])
+    {
+        $this->validateViewMethod($methodName);
+
+        $viewData = [
+            'routes' => $this->config['items'],
+            'currentRoute' => $this->app->request->getCurrentUrl(),
+        ];
+
+        $viewData = array_merge($viewData, $data);
+
+        return $this->renderComponent($this->config['views'][$methodName], $viewData);
+    }
+}
+

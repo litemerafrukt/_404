@@ -12,5 +12,6 @@ return [
         'newUser'        => $this->app->url->create('register/user'),
         'adminUsers'     => $this->app->url->create('admin/users'),
         'adminContent'   => $this->app->url->create('admin/content'),
+        'adminWebshop'   => $this->app->url->create('admin/webshop'),
     ],
 ];

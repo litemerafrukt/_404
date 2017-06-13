@@ -51,13 +51,16 @@ Visar produkt id samt hur många som finns tillgängliga borträknat varor i var
 Visar en översikt över varukorgstabellen.
 
 ### oophp_vlowinventory
-Rapport över varor som kan lågt lagersaldo. Vyn hämtar det faktiska lagersaldot för en vara när vyn visas.
+Rapport över varor som kan ha lågt lagersaldo. Vyn hämtar det faktiska lagersaldot för en vara när vyn visas.
 
 ### oophp_vorderdetails
 Visar översikt över alla ordrar.
 
 ### oophp_vvirtualinventorydescription
 Samma sak som oophp_vvirtualinventory men inkluderar produkt description.
+
+### oophp_vadmininventory
+Vy som används i me-sidans backend för att visa info från olika tabeller angående produkter och lager.
 
 ## Procedurer
 

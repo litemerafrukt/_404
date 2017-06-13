@@ -1,0 +1,19 @@
+<?php
+
+namespace _404\Toolz;
+
+/**
+ * Interface for classes needing injection of the $tlz object
+ */
+interface ToolzInjectableInterface
+{
+    /**
+     * Inject the $tlz into this class.
+     *
+     * @param object $tlz.
+     *
+     * @return $this for chaining.
+     */
+    public function setTlz($tlz);
+}
+

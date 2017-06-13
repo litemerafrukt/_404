@@ -166,3 +166,10 @@ Helpers
 .content-deleted {
     opacity: 0.5;
 }
+
+/*
+ * Webshop
+ */
+.ws-small-image {
+    max-width: 50px;
+}

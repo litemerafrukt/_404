@@ -3,6 +3,7 @@
 # environment and publishing to www.student.bth.se.
 #
 #
+
 RewriteEngine on
 
 # Igore real files (images, stylesheets etc.)

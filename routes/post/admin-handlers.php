@@ -179,3 +179,103 @@ $app->router->add('admin/handle/content/new', function () use ($app) {
         ->map('trim')
         ->resolve($createAndRedirect, [$app, 'stdErr']);
 });
+
+/************************************************
+* webshop
+************************************************/
+$app->router->add('admin/handle/webshop/edit', function () use ($app, $tlz) {
+    $productDb = new \_404\Database\Products($app->dbconnection);
+
+    // Form data
+    $formEithers = [];
+
+    $prodIdExists = $tlz->partial([$productDb, 'exists'], 'id');
+
+    $formEithers['id'] = $app->post->either('id')
+        ->filter('is_numeric', "Produkt id är inte numeriskt.")
+        ->filter($prodIdExists, "Produktens id finns inte i databasen.");
+
+    $formEithers['description'] = $app->post->either('description')
+        ->map('trim')
+        ->filter('is_string', "Felaktig produktbeskrivning.");
+
+    $formEithers['image_path'] = $app->post->either('image_path')
+        ->map('trim')
+        ->filter('is_string', "Felaktig bildsökväg.");
+
+    $formEithers['price'] = $app->post->either('price')
+        ->filter('is_numeric', "Pris måste vara numeriskt.");
+
+    $formEithers['category_description'] = $app->post->either('category_description')
+        ->map('trim')
+        ->map(function ($catDesc) {
+            return $catDesc == "" ? 'okategoriserat' : $catDesc;
+        });
+
+    $formEithers['inventory'] = $app->post->either('inventory')
+        ->filter('is_numeric', "Lager måste vara numeriskt.");
+
+    $valuesEither = $tlz->combineEither($formEithers);
+
+    // var_dump($tlz->combineEither($formEithers));
+    // die();
+
+    return $valuesEither->resolve(
+        function ($values) use ($app, $productDb) {
+            $productDb->update(
+                $values['id'],
+                $values['description'],
+                $values['image_path'],
+                $values['price'],
+                $values['category_description'],
+                $values['inventory']
+            );
+            return $app->setRedirectBack();
+        },
+        [$app, 'stdErr']
+    );
+});
+
+$app->router->add('admin/handle/webshop/delete/{productId}', function ($productId) use ($app, $tlz) {
+    $productDb = new _404\Database\Products($app->dbconnection);
+
+    // Happy path
+    $deleteContent = function ($productId) use ($app, $productDb) {
+        $productDb->delete($productId);
+        return $app->setRedirectBack();
+    };
+
+    $prodIdExists = $tlz->partial([$productDb, 'exists'], 'id');
+
+    // Check and resolve
+    return $tlz->eitherEmpty($productId, 'Inget produkt-id.')
+        ->filter($prodIdExists, "Produktens id finns inte i databasen.")
+        ->resolve($deleteContent, [$app, 'stdErr']);
+});
+
+$app->router->add('admin/handle/webshop/new', function () use ($app, $tlz) {
+    $productDb = new _404\Database\Products($app->dbconnection);
+
+    $formEithers = [];
+
+    $formEithers['description'] = $app->post->either('description')
+        ->map('trim')
+        ->filter(function ($desc) {
+            return !empty($desc);
+        }, 'Produktbeskrivning saknas');
+
+    $formEithers['category_description'] = $app->post->either('category_description')
+        ->map('trim')
+        ->map(function ($catDesc) {
+            return $catDesc == "" ? 'okategoriserat' : $catDesc;
+        });
+
+    $valuesEither = $tlz->combineEither($formEithers);
+
+    $createAndRedirect = function ($values) use ($productDb, $app) {
+        $id = $productDb->newProduct($values['description'], $values['category_description']);
+        return $app->setRedirect("admin/webshop/edit/$id");
+    };
+
+    return $valuesEither->resolve($createAndRedirect, [$app, 'stdErr']);
+});

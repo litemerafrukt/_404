@@ -62,6 +62,13 @@ class Toolz
         return $combinedEither;
     }
 
+    /**
+     * Box up a value in an either. If value is empty() then Left else Right.
+     *
+     * @param mixed $value The value to box up
+     * @param string $errorMsg Error message for Left if the $value is empty
+     * @return Left/Right
+     */
     public function eitherEmpty($value, $errorMsg)
     {
         return empty($value)
@@ -72,7 +79,7 @@ class Toolz
     /**
      * Boxup a string in a textbox
      *
-     * @param string
+     * @param string $text
      * @return TextBox
      */
     public function textbox($text)
@@ -83,8 +90,8 @@ class Toolz
     /**
      * Filter a text with filters.
      *
-     * @param string - the text
-     * @param string - a comma separated string with filters
+     * @param string $text - the text
+     * @param string $filters - a comma separated string with filters
      * @return string - the filtered string
      */
     public function filterText($text, $filters)

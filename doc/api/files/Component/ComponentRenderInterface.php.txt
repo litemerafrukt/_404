@@ -1,0 +1,18 @@
+<?php
+
+namespace _404\Component;
+
+interface ComponentRenderInterface
+{
+    /**
+     * Render component view file with data.
+     * Use config arrays ['views'] as methodnames.
+     *
+     * @param $methodName string - corresponds to a name for a view in config
+     * @param $data array - arguments passed to methods
+     * @return string
+     * @throws \Exception
+     */
+    public function __call($methodName, $data);
+}
+

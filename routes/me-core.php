@@ -15,9 +15,9 @@ $app->router->add("", function () use ($app) {
 /* $app->router->add("", function () use ($app) { */
 /*     $app->view->add("layout") */
 /*         ->data(["title" => "Hem"]) */
-/*         ->region("layout"); */
+/*         ->name("layout"); */
 
-/*     $app->view->add("index")->region("main"); */
+/*     $app->view->add("index")->name("main"); */
 
 /*     return $app->response->setBody($app->view->layout->renderBuffered()); */
 /* }); */

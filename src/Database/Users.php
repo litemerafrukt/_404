@@ -198,6 +198,13 @@ class Users
         return $statement->fetchAll(PDO::FETCH_OBJ);
     }
 
+    // $users = new SelectQuery('oophp_user')
+    //     ->where("email LIKE '$filter'")
+    //     ->orderBy($bywhat, $direction)
+    //     ->limit($theLimit)
+    //     ->offset($theOffset)
+    //     ->get();
+
     /**
      * Check if a user is admin (userlevel == ADMIN_LEVEL)
      *

@@ -68,6 +68,7 @@ $app->router->add('admin/passwordchangesuccess', function () use ($app) {
     return $app->response->setBody($app->view->renderBuffered("layout"));
 });
 
+
 /************************************************
 * Admin content
 ************************************************/
@@ -101,6 +102,47 @@ $app->router->add('admin/content/edit/{id}', function ($id) use ($app, $tlz) {
         function ($content) use ($app) {
             $app->view->add("layout", ["title" => "$content->title"], "layout");
             $app->view->add("admin/editcontent", compact('content'), "main");
+
+            return $app->response->setBody($app->view->renderBuffered("layout"));
+        },
+        [$app, 'stdErr']
+    );
+});
+
+
+/************************************************
+* Admin webshop
+************************************************/
+$app->router->add('admin/webshop', function () use ($app) {
+    $productsDb = new _404\Database\Products($app->dbconnection);
+
+    $products = $productsDb->all();
+
+    $app->view->add("layout", ["title" => "Lager"], "layout");
+    $app->view->add("admin/webshop", compact('products'), "main");
+
+    return $app->response->setBody($app->view->renderBuffered("layout"));
+});
+
+$app->router->add('admin/webshop/new', function () use ($app) {
+    $app->view->add("layout", ["title" => "Ny produkt"], "layout");
+    $app->view->add("admin/newproduct", [], "main");
+
+    return $app->response->setBody($app->view->renderBuffered("layout"));
+});
+
+$app->router->add('admin/webshop/edit/{id}', function ($id) use ($app, $tlz) {
+    $productsDb = new _404\Database\Products($app->dbconnection);
+
+    $eitherContent = $tlz->eitherEmpty(
+        $productsDb->fetch($id),
+        "Ingen produkt med id: $id"
+    );
+
+    return $eitherContent->resolve(
+        function ($product) use ($app) {
+            $app->view->add("layout", ["title" => "$product->description"], "layout");
+            $app->view->add("admin/editproduct", compact('product'), "main");
 
             return $app->response->setBody($app->view->renderBuffered("layout"));
         },
