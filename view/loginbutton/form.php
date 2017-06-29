@@ -1,5 +1,5 @@
 <?php if (! $userLoggedIn) : ?>
-    <div class="<?= $showLogin ? '' : 'hidden' ?> form-group">
+    <div id="login-menu" class="<?= $showLogin ? '' : 'hidden' ?> form-group">
         <form class="navbar-text navbar-right" method="post" action="<?= $loginHandler ?>">
             <a href="<?= $newUser ?>" class="right-divider">Skapa ny användare</a>
             <span>Inloggning: </span>
@@ -10,7 +10,7 @@
         </form>
     </div>
 <?php elseif ($userLoggedIn) : ?>
-    <div class="<?= $showLogin ? '' : 'hidden' ?>">
+    <div id="login-menu" class="<?= $showLogin ? '' : 'hidden' ?>">
         <form class="navbar-text navbar-right" method="post" action="<?= $logoutHandler ?>">
             <span class="right-divider">Inloggad som: <?= $username ?></span>
             <?php if ($isAdmin) : ?>
@@ -25,3 +25,13 @@
         </form>
     </div>
 <?php endif ?>
+
+<script>
+loginButton = document.getElementById("login-button");
+loginMenu = document.getElementById("login-menu");
+
+loginButton.addEventListener("click", function () {
+    console.log("whatnot");
+    loginMenu.classList.toggle("hidden");
+});
+</script>

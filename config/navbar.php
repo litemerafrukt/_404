@@ -39,8 +39,9 @@ return [
             "route" => $this->app->url->create("about"),
         ],
         "login" => [
-            "text"  => '<i class="fa fa-user"></i> ' . $this->app->user->name(),
-            "route" => $this->app->url->create("?login=show"),
+            "text"  => '<span id="login-button"><i class="fa fa-user"></i> ' . $this->app->user->name() . "</span>",
+            /* "route" => $this->app->url->create("?login=show"), */
+            "route" => $this->app->url->create("#"),
         ]
     ]
 ];
