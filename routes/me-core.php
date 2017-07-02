@@ -47,3 +47,7 @@ $app->router->add('api/sysinfo', function () use ($app) {
 
     return $app->response->setJson($data);
 });
+
+$app->router->add('phpinfo', function () {
+    return phpinfo();
+});
