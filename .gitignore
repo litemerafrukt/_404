@@ -5,3 +5,5 @@
 .DS_Store
 /config/database.php
 tags
+oophpme.*
+/.vs

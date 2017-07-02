@@ -22,6 +22,7 @@ img {
 
 .intro-header {
     background: url(../image/elephant.jpg) no-repeat center center;
+    background-size: cover;
 }
 
 .report-header {
