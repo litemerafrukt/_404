@@ -24,7 +24,7 @@
                             <a href="#kmom05" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-up fa-fw"></i> <span class="network-name">K5</span></a>
                         </li>
                         <li>
-                            <a href="#kmom06" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-down fa-fw"></i> <span class="network-name">K6</span></a>
+                            <a href="#kmom06" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-up fa-fw"></i> <span class="network-name">K6</span></a>
                         </li>
                         <li>
                             <a href="#kmom10" class="btn btn-default btn-lg"><i class="fa fa-thumbs-o-down fa-fw"></i> <span class="network-name">Projekt</span></a>
@@ -119,5 +119,19 @@
     </div>
 
 <a name="kmom06"></a>
+<div class="content-section-a">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-9 lead">
+                <div class="clearfix"></div>
+                <h2 class="section-heading">Kmom06</h2>
+
+                <p class="report-date"><?= $app->reports->article('Kmom06')->date() ?></p>
+
+                <?= $app->reports->article('Kmom06')->html() ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <a name="kmom10"></a>

@@ -128,11 +128,11 @@ class Toolz
      */
     public function render($file, $data)
     {
-        ob_start();
-
         if (!file_exists($file)) {
             throw new \Exception("View template not found: $file.");
         }
+
+        ob_start();
 
         extract($data);
 

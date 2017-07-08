@@ -16,7 +16,7 @@ CREATE TABLE oophp_users
 (
     id          INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     username    VARCHAR(100) NOT NULL UNIQUE,
-    password    VARCHAR(255) NOT NULL,
+    password    VARCHAR(255) NOT NULL UNIQUE,
     email       VARCHAR(100) NOT NULL,
     userlevel   INT NOT NULL
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
@@ -56,7 +56,10 @@ CREATE TABLE `oophp_content`
   `published` DATETIME DEFAULT NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated` DATETIME DEFAULT NULL, --  ON UPDATE CURRENT_TIMESTAMP,
-  `deleted` DATETIME DEFAULT NULL
+  `deleted` DATETIME DEFAULT NULL,
+
+  KEY `index_type` (`type`),
+  FULLTEXT KEY `data_search` (`data`)
 
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
